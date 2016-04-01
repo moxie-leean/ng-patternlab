@@ -1,0 +1,18 @@
+{
+  "name": "ln-patterns",
+  "version": "0.1.0",
+  "description": "An AngularJS module for Lean patterns.",
+  "main": "index.js",
+  "dependencies": {
+    "glob": "7.0.3",
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
+    "html-escape": "1.0.2"
+  },
+  "scripts": {
+    "postinstall": "gulp lnPatterns",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
+  "license": "MIT"
+}

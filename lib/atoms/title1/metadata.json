@@ -1,0 +1,8 @@
+{
+  "name": "ln-atom-title1",
+  "description": "Atom - Title 1",
+  "params": {
+    "title": "STRING",
+    "class": "STRING"
+  }
+}
