@@ -12,15 +12,35 @@ npm install ln-patterns --save-dev
 ```
 
 
-# Usage
+## Configuration
 
-Run the lnPatterns gulp task to generate all the components and templates:
+TODO
+
+
+## Build
+
+To generate all the components and templates, just add ln-patterns binary to the postinstall script at your package.json file:
+
+```javascript
+{
+  ...
+  "scripts": {
+    "postinstall": "ln-patterns"
+  }
+  ...
+}
+```
+
+And run it with the following command:
 
 ```
-gulp lnPatterns
+npm run postinstall
 ```
 
-Then add the module as a dependency to your app:
+
+## Usage
+
+Then you can add the module as a dependency on your AngularJS application:
 
 ```javascript
 require('ln-patterns');
@@ -38,4 +58,4 @@ And use the components as you need. Here are some examples:
 <ln-atom-title2 title="{{vm.title}}" class="{{vm.class}}"></ln-atom-title2>
 ```
 
-To see all available components you can setup an AngularJS route to the following template key: **templates/patterns/template.html**, which is also generated automatically by the module when running the lnPatterns gulp task.
+To see all available components you can setup an AngularJS route to the following template key: **templates/patterns/template.html**, which is also generated automatically by the module when running ln-patterns binary.
