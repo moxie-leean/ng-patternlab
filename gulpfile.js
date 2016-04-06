@@ -9,7 +9,6 @@ var templateCache = require('gulp-angular-templatecache');
 var fs = require('fs');
 var glob = require('glob');
 var path = require('path');
-var htmlEscape = require('html-escape');
 var _ = require('lodash');
 
 //
@@ -25,6 +24,8 @@ var PATTERNS_TEMPLATE_PAGE = PATTERNS_TEMPLATE + '.html';
 var ENCODING = 'utf8';
 var HEADER_REGEX = /\/\*\*\*.*\*\*\*\//;
 var COMPONENT_REGEX = /{COMPONENT}[\s\S]*{END_COMPONENT}/m;
+var EXAMPLE_REGEX = /{EXAMPLE}[\s\S]*{END_EXAMPLE}/m;
+var CONTROLLER_REGEX = /{CONTROLLER}[\s\S]*{END_CONTROLLER}/m;
 
 //
 // global variables
@@ -52,18 +53,30 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
   var molecules = '';
   var organisms = '';
   var templates = '';
+  var controllers = '';
+  var count = 0;
 
   //read tpl files
   var componentsTpl = fs.readFileSync('./lib/ngComponents.tpl', ENCODING);
   componentsTpl = componentsTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
 
+  var controllersTpl = fs.readFileSync('./lib/ngControllers.tpl', ENCODING);
+  controllersTpl = controllersTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
+
   var patternsTpl = fs.readFileSync('./lib/' + PATTERNS_TEMPLATE + '.tpl', ENCODING);
   patternsTpl = patternsTpl.replace(HEADER_REGEX, COMMON_HEADER_HTML);
 
-  //get component html from tpl
+  //get component and example htmls and controller js from tpls
   var componentHtml = COMPONENT_REGEX.exec(patternsTpl)[0];
-  componentHtml = componentHtml.replace('{COMPONENT}', '');
-  componentHtml = componentHtml.replace('{END_COMPONENT}', '');
+  componentHtml = componentHtml.replace('{COMPONENT}', '').replace('{END_COMPONENT}', '');
+
+  var exampleHtml = EXAMPLE_REGEX.exec(componentHtml)[0];
+  exampleHtml = exampleHtml.replace('{EXAMPLE}', '').replace('{END_EXAMPLE}', '');
+
+  var controllerJs = CONTROLLER_REGEX.exec(controllersTpl)[0];
+  controllerJs = controllerJs.replace('{CONTROLLER}', '').replace('{END_CONTROLLER}', '');
+
+  //clean patterns tpl
   patternsTpl = patternsTpl.replace(COMPONENT_REGEX, '');
 
   var include = function(file, collection) {
@@ -71,13 +84,19 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
     var folder = splitted.slice(2, -1).join('/');
     var filename = splitted.pop().replace('.js', '');
     var compEnabled = true;
-    var compConfig = {};
+    var compConfig = null;
 
     //check if the component is enabled in the application config file
     if (appConfig) {
-      compConfig = _.find(appConfig.enabledComponents, {'component': folder, 'generic': true});
+      if (!_.has(appConfig, 'enabledComponents'))
+        compEnabled = false;
+      else if (_.isArray(appConfig.enabledComponents)) {
+        compConfig = _.find(appConfig.enabledComponents, {'component': folder, 'generic': true});
 
-      if (!compConfig)
+        if (!compConfig)
+          compEnabled = false;
+      }
+      else if (appConfig.enabledComponents != '*')
         compEnabled = false;
     }
 
@@ -98,12 +117,38 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
         templates += reqStr;
 
       if (filename.indexOf('directive') >= 0) {
+        count += 1;
+
+        //get component example instance html
+        var exampleInstanceHtml = fs.readFileSync('./lib/' + folder + '/example.html', ENCODING);
+
+        //generate examples with instantiated parameters
+        var examples = '';
+
+        if (compConfig && _.has(compConfig, 'examplesParams') && _.isArray(compConfig.examplesParams)) {
+          for (var i = 0; i < compConfig.examplesParams.length; i++) {
+            var paramsInstance = compConfig.examplesParams[i];
+            var controllerName = 'lnController_' + count + '_' + i;
+            var controllerAttrs = JSON.stringify(paramsInstance);
+
+            examples += exampleHtml
+              .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
+              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
+              .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
+
+            controllers += controllerJs
+              .replace(/{CONTROLLER_NAME}/g, controllerName)
+              .replace(/{CONTROLLER_ATTRIBUTES}/g, controllerAttrs);
+          }
+        }
+
         //instantiate component html and include into patterns tpl
         patternsTpl += componentHtml
           .replace(/{COMPONENT_NAME}/g, metadata.name)
           .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
           .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
-          .replace(/{COMPONENT_EXAMPLE}/g, htmlEscape(fs.readFileSync('./lib/' + folder + '/example.html', ENCODING)));
+          .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
+          .replace(EXAMPLE_REGEX, examples);
 
         //add component path to the enabled templates list
         enabledTemplates.push('./lib/' + folder + '/template.html');
@@ -116,32 +161,37 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
   glob.sync('./lib/organisms/**/*.js').forEach(function(file) { include(file, 'organisms'); });
   glob.sync('./lib/templates/**/*.js').forEach(function(file) { include(file, 'templates'); });
 
-  //instantiate components imports and include them into components tpl
-  componentsTpl = componentsTpl.replace('{ATOMS}', atoms);
-  componentsTpl = componentsTpl.replace('{MOLECULES}', molecules);
-  componentsTpl = componentsTpl.replace('{ORGANISMS}', organisms);
-  componentsTpl = componentsTpl.replace('{TEMPLATES}', templates);
+  //instantiate components imports and generate ngComponents.js
+  componentsTpl = componentsTpl
+    .replace('{ATOMS}', atoms)
+    .replace('{MOLECULES}', molecules)
+    .replace('{ORGANISMS}', organisms)
+    .replace('{TEMPLATES}', templates);
 
-  //generate components imports into ngComponents.js
-  fs.writeFile('./lib/ngComponents.js', componentsTpl, function(){
-    var filePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
+  fs.writeFileSync('./lib/ngComponents.js', componentsTpl);
 
-    if (!appConfig || appConfig.generatePatternsPage) {
-      enabledTemplates.push(filePath);
+  //generate controllers and patterns page
+  var filePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
 
-      //generate patterns page
-      fs.writeFile(filePath, patternsTpl, cb);
-    }
-    else {
-      //delete patterns page if exists
-      try {
-        fs.unlinkSync(filePath);
-      }
-      catch(e) {}
+  if (!appConfig || appConfig.generatePatternsPage) {
+    enabledTemplates.push(filePath);
 
-      cb();
-    }
-  });
+    //generate patterns page
+    fs.writeFileSync(filePath, patternsTpl);
+  }
+  else {
+    //delete patterns page if exists
+    try { fs.unlinkSync(filePath); } catch(e) {}
+
+    //clean controllers
+    controllers = '';
+  }
+
+  //instantiate controllers and generate ngControllers.js
+  controllersTpl = controllersTpl.replace(CONTROLLER_REGEX, controllers);
+  fs.writeFileSync('./lib/ngControllers.js', controllersTpl);
+
+  cb();
 });
 
 gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function() {

@@ -9,7 +9,6 @@
     "gulp": "^3.9.0",
     "gulp-util": "^3.0.7",
     "gulp-angular-templatecache": "^1.8.0",
-    "html-escape": "^1.0.2",
     "lodash": "^4.8.2",
     "shelljs": "^0.6.0"
   },
