@@ -1,7 +1,7 @@
 {
   "name": "ln-patterns",
   "version": "0.1.0",
-  "description": "An AngularJS module for Lean patterns.",
+  "description": "An AngularJS module for Lean Patterns.",
   "main": "index.js",
   "dependencies": {
     "glob": "^7.0.3",

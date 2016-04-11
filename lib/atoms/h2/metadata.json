@@ -1,6 +1,6 @@
 {
-  "name": "ln-atom-title1",
-  "description": "Atom - Title 1",
+  "name": "ln-a-h2",
+  "description": "Atom - Header 2",
   "params": {
     "title": "STRING",
     "class": "STRING"

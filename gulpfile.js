@@ -91,7 +91,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
       if (!_.has(appConfig, 'enabledComponents'))
         compEnabled = false;
       else if (_.isArray(appConfig.enabledComponents)) {
-        compConfig = _.find(appConfig.enabledComponents, {'component': folder, 'generic': true});
+        compConfig = _.find(appConfig.enabledComponents, {'component': folder});
 
         if (!compConfig)
           compEnabled = false;
@@ -125,14 +125,15 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
         //generate examples with instantiated parameters
         var examples = '';
 
-        if (compConfig && _.has(compConfig, 'examplesParams') && _.isArray(compConfig.examplesParams)) {
-          for (var i = 0; i < compConfig.examplesParams.length; i++) {
-            var paramsInstance = compConfig.examplesParams[i];
+        if (compConfig && _.has(compConfig, 'examples') && _.isArray(compConfig.examples)) {
+          for (var i = 0; i < compConfig.examples.length; i++) {
+            var exampleInstance = compConfig.examples[i];
             var controllerName = 'lnController_' + count + '_' + i;
-            var controllerAttrs = JSON.stringify(paramsInstance);
+            var controllerAttrs = JSON.stringify(exampleInstance.params);
 
             examples += exampleHtml
               .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
+              .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
               .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
               .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
 

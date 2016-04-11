@@ -1,4 +1,4 @@
-# Leean Patterns
+# Lean Patterns
 
 > An AngularJS module for Lean patterns.
 
@@ -25,26 +25,34 @@ The config file must have the following structure:
   "customComponentsLocation": "../../app",
   "enabledComponents": [
     {
-      "component": "atoms/title1",
-      "generic": true,
-      "examplesParams": [
+      "component": "atoms/h1",
+      "custom": false,
+      "examples": [
         {
-          "title": "Title 1"
+          "name": "Header 1",
+          "params": {
+            "title": "Title 1"
+          }
         },
         {
-          "title": "Title 1 - Green",
-          "class": "green"
+          "name": "Header 1 - Green",
+          "params": {
+            "title": "Title 1 - Green",
+            "class": "green"
+          }
         },
         ...
       ]
     },
     {
-      "component": "atoms/title2",
-      "generic": true,
-      "examplesParams": [
+      "component": "atoms/h2",
+      "custom": false,
+      "examples": [
         {
-          "title": "Title 2 - Blue",
-          "class": "blue"
+          "name": "Header 2",
+          "params": {
+            "title": "Title 2"
+          }
         },
         ...
       ]
@@ -54,7 +62,7 @@ The config file must have the following structure:
 }
 ```
 
-If **generatePatternsPage = true**, the module will generate a template page containing all enabled components with their corresponding examples. Each **exampleParams** object of each enabled component will generate a different example in the patterns page, which corresponds to the component instantiated with those parameters.
+If **generatePatternsPage = true**, the module will generate a template page containing all enabled components with their corresponding examples. Each **examples** object of each enabled component will generate a different example in the patterns page, which corresponds to the component instantiated with the specified name and parameters.
 
 
 ## Build
@@ -95,8 +103,8 @@ angular
 And use the components as you need inside your templates. Here are some examples:
 
 ```html
-<ln-atom-title1 title="{{title}}" class="{{class}}"></ln-atom-title1>
-<ln-atom-title2 title="{{title}}" class="{{class}}"></ln-atom-title2>
+<ln-a-h1 title="{{title}}" class="{{class}}"></ln-a-h1>
+<ln-a-h2 title="{{title}}" class="{{class}}"></ln-a-h2>
 ```
 
 NOTE: To access the patterns page you can setup an AngularJS route to the following template key: **templates/patterns/template.html**. That key is automatically bound to the gererated html on the AngularJS $templateCache.

@@ -11,6 +11,7 @@
   {EXAMPLE}
   <div style="display: block; margin: 0 50px 10px 50px;" ng-controller="{EXAMPLE_CONTROLLER}">
     <hr/>
+    <code style="display: block; margin: 10px 0 10px 0;">Name: {EXAMPLE_NAME}</code>
     <code style="display: block; margin: 10px 0 10px 0;">Params: {EXAMPLE_PARAMS}</code>
     {EXAMPLE_INSTANCE}
   </div>
