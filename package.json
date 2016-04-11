@@ -1,0 +1,20 @@
+{
+  "name": "ln-patterns",
+  "version": "0.1.0",
+  "description": "An AngularJS module for Lean Patterns.",
+  "main": "index.js",
+  "dependencies": {
+    "glob": "^7.0.3",
+    "path": "^0.12.7",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.7",
+    "gulp-angular-templatecache": "^1.8.0",
+    "lodash": "^4.8.2",
+    "shelljs": "^0.6.0"
+  },
+  "bin": {
+    "ln-patterns": "./build.js"
+  },
+  "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
+  "license": "MIT"
+}
