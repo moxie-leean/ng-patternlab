@@ -106,7 +106,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
 
       //include import string into the corresponding atomic type
       var reqStr = "require('./" + folder + "/" + filename + "');\n";
-      
+
       if (collection == 'atoms')
         atoms += reqStr;
       else if (collection == 'molecules')
@@ -116,7 +116,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
       else
         templates += reqStr;
 
-      if (filename.indexOf('directive') >= 0) {
+      if (filename.indexOf('component') >= 0) {
         count += 1;
 
         //get component example instance html
