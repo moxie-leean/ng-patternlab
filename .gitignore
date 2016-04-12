@@ -1,2 +1,13 @@
+#NPM
 node_modules/
+
+#IDE Specific
 .idea
+
+#Module specific build artefacts
+lib/ngComponents.js
+lib/ngControllers.js
+lib/ngTemplates.js
+
+lib/templates/patterns/*.html
+
