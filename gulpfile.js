@@ -36,179 +36,190 @@ var enabledTemplates = [];
 //
 // tasks
 //
-gulp.task('lnPatternsLoadConfig', function(cb){
-  //load application config file
-  try {
-    appConfig = require(CONFIG_FILE);
-  }
-  catch(e) {
-    gutil.log('Application config file not found. All components will be included.');
-  }
-
-  cb();
-});
-
-gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function(cb){
-  var atoms = '';
-  var molecules = '';
-  var organisms = '';
-  var templates = '';
-  var controllers = '';
-  var count = 0;
-
-  //read tpl files
-  var componentsTpl = fs.readFileSync('./lib/ngComponents.tpl', ENCODING);
-  componentsTpl = componentsTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
-
-  var controllersTpl = fs.readFileSync('./lib/ngControllers.tpl', ENCODING);
-  controllersTpl = controllersTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
-
-  var patternsTpl = fs.readFileSync('./lib/' + PATTERNS_TEMPLATE + '.tpl', ENCODING);
-  patternsTpl = patternsTpl.replace(HEADER_REGEX, COMMON_HEADER_HTML);
-
-  //get component and example htmls and controller js from tpls
-  var componentHtml = COMPONENT_REGEX.exec(patternsTpl)[0];
-  componentHtml = componentHtml.replace('{COMPONENT}', '').replace('{END_COMPONENT}', '');
-
-  var exampleHtml = EXAMPLE_REGEX.exec(componentHtml)[0];
-  exampleHtml = exampleHtml.replace('{EXAMPLE}', '').replace('{END_EXAMPLE}', '');
-
-  var controllerJs = CONTROLLER_REGEX.exec(controllersTpl)[0];
-  controllerJs = controllerJs.replace('{CONTROLLER}', '').replace('{END_CONTROLLER}', '');
-
-  //clean patterns tpl
-  patternsTpl = patternsTpl.replace(COMPONENT_REGEX, '');
-
-  var include = function(file, collection) {
-    var splitted = file.split('/');
-    var folder = splitted.slice(2, -1).join('/');
-    var filename = splitted.pop().replace('.js', '');
-    var compEnabled = true;
-    var compConfig = null;
-
-    //check if the component is enabled in the application config file
-    if (appConfig) {
-      if (!_.has(appConfig, 'enabledComponents'))
-        compEnabled = false;
-      else if (_.isArray(appConfig.enabledComponents)) {
-        compConfig = _.find(appConfig.enabledComponents, {'component': folder});
-
-        if (!compConfig)
-          compEnabled = false;
-      }
-      else if (appConfig.enabledComponents != '*')
-        compEnabled = false;
+gulp.task('lnPatternsLoadConfig', function (cb) {
+    //load application config file
+    try {
+        appConfig = require(CONFIG_FILE);
+    }
+    catch (e) {
+        gutil.log('Application config file not found. All components will be included.');
     }
 
-    if (compEnabled) {
-      //get component metadata
-      var metadata = require('./lib/' + folder + '/metadata.json');
+    cb();
+});
 
-      //include import string into the corresponding atomic type
-      var reqStr = "require('./" + folder + "/" + filename + "');\n";
+gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
+    var atoms = '';
+    var molecules = '';
+    var organisms = '';
+    var templates = '';
+    var controllers = '';
+    var count = 0;
 
-      if (collection == 'atoms')
-        atoms += reqStr;
-      else if (collection == 'molecules')
-        molecules += reqStr;
-      else if (collection == 'organisms')
-        organisms += reqStr;
-      else
-        templates += reqStr;
+    //read tpl files
+    var componentsTpl = fs.readFileSync('./lib/ngComponents.tpl', ENCODING);
+    componentsTpl = componentsTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
 
-      if (filename.indexOf('component') >= 0) {
-        count += 1;
+    var controllersTpl = fs.readFileSync('./lib/ngControllers.tpl', ENCODING);
+    controllersTpl = controllersTpl.replace(HEADER_REGEX, COMMON_HEADER_JS);
 
-        //get component example instance html
-        var exampleInstanceHtml = fs.readFileSync('./lib/' + folder + '/example.html', ENCODING);
+    var patternsTpl = fs.readFileSync('./lib/' + PATTERNS_TEMPLATE + '.tpl', ENCODING);
+    patternsTpl = patternsTpl.replace(HEADER_REGEX, COMMON_HEADER_HTML);
 
-        //generate examples with instantiated parameters
-        var examples = '';
+    //get component and example htmls and controller js from tpls
+    var componentHtml = COMPONENT_REGEX.exec(patternsTpl)[0];
+    componentHtml = componentHtml.replace('{COMPONENT}', '').replace('{END_COMPONENT}', '');
 
-        if (compConfig && _.has(compConfig, 'examples') && _.isArray(compConfig.examples)) {
-          for (var i = 0; i < compConfig.examples.length; i++) {
-            var exampleInstance = compConfig.examples[i];
-            var controllerName = 'lnController_' + count + '_' + i;
-            var controllerAttrs = JSON.stringify(exampleInstance.params);
+    var exampleHtml = EXAMPLE_REGEX.exec(componentHtml)[0];
+    exampleHtml = exampleHtml.replace('{EXAMPLE}', '').replace('{END_EXAMPLE}', '');
 
-            examples += exampleHtml
-              .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
-              .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
-              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
-              .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
+    var controllerJs = CONTROLLER_REGEX.exec(controllersTpl)[0];
+    controllerJs = controllerJs.replace('{CONTROLLER}', '').replace('{END_CONTROLLER}', '');
 
-            controllers += controllerJs
-              .replace(/{CONTROLLER_NAME}/g, controllerName)
-              .replace(/{CONTROLLER_ATTRIBUTES}/g, controllerAttrs);
-          }
+    //clean patterns tpl
+    patternsTpl = patternsTpl.replace(COMPONENT_REGEX, '');
+
+    var include = function (file, collection) {
+        var splitted = file.split('/');
+        var folder = splitted.slice(2, -1).join('/');
+        var filename = splitted.pop().replace('.js', '');
+        var compEnabled = true;
+        var compConfig = null;
+
+        //check if the component is enabled in the application config file
+        if (appConfig) {
+            if (!_.has(appConfig, 'enabledComponents'))
+                compEnabled = false;
+            else if (_.isArray(appConfig.enabledComponents)) {
+                compConfig = _.find(appConfig.enabledComponents, {'component': folder});
+
+                if (!compConfig)
+                    compEnabled = false;
+            }
+            else if (appConfig.enabledComponents != '*')
+                compEnabled = false;
         }
 
-        //instantiate component html and include into patterns tpl
-        patternsTpl += componentHtml
-          .replace(/{COMPONENT_NAME}/g, metadata.name)
-          .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
-          .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
-          .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
-          .replace(EXAMPLE_REGEX, examples);
+        if (compEnabled) {
+            //get component metadata
+            var metadata = require('./lib/' + folder + '/metadata.json');
 
-        //add component path to the enabled templates list
-        enabledTemplates.push('./lib/' + folder + '/template.html');
-      }
+            //include import string into the corresponding atomic type
+            var reqStr = "require('./" + folder + "/" + filename + "');\n";
+
+            if (collection == 'atoms')
+                atoms += reqStr;
+            else if (collection == 'molecules')
+                molecules += reqStr;
+            else if (collection == 'organisms')
+                organisms += reqStr;
+            else
+                templates += reqStr;
+
+            if (filename.indexOf('directive') >= 0 || filename.indexOf('component') >= 0) {
+                count += 1;
+
+                //get component example instance html
+                var exampleInstanceHtml = fs.readFileSync('./lib/' + folder + '/example.html', ENCODING);
+
+                //generate examples with instantiated parameters
+                var examples = '';
+
+                if (compConfig && _.has(compConfig, 'examples') && _.isArray(compConfig.examples)) {
+                    for (var i = 0; i < compConfig.examples.length; i++) {
+                        var exampleInstance = compConfig.examples[i];
+                        var controllerName = 'lnController_' + count + '_' + i;
+                        var controllerAttrs = JSON.stringify(exampleInstance.params);
+
+                        examples += exampleHtml
+                            .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
+                            .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
+                            .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
+                            .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
+
+                        controllers += controllerJs
+                            .replace(/{CONTROLLER_NAME}/g, controllerName)
+                            .replace(/{CONTROLLER_ATTRIBUTES}/g, controllerAttrs);
+                    }
+                }
+
+                //instantiate component html and include into patterns tpl
+                patternsTpl += componentHtml
+                    .replace(/{COMPONENT_NAME}/g, metadata.name)
+                    .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
+                    .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
+                    .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
+                    .replace(EXAMPLE_REGEX, examples);
+
+                //add component path to the enabled templates list
+                enabledTemplates.push('./lib/' + folder + '/template.html');
+            }
+        }
+    };
+
+    glob.sync('./lib/atoms/**/*.js').forEach(function (file) {
+        include(file, 'atoms');
+    });
+    glob.sync('./lib/molecules/**/*.js').forEach(function (file) {
+        include(file, 'molecules');
+    });
+    glob.sync('./lib/organisms/**/*.js').forEach(function (file) {
+        include(file, 'organisms');
+    });
+    glob.sync('./lib/templates/**/*.js').forEach(function (file) {
+        include(file, 'templates');
+    });
+
+    //instantiate components imports and generate ngComponents.js
+    componentsTpl = componentsTpl
+        .replace('{ATOMS}', atoms)
+        .replace('{MOLECULES}', molecules)
+        .replace('{ORGANISMS}', organisms)
+        .replace('{TEMPLATES}', templates);
+
+    fs.writeFileSync('./lib/ngComponents.js', componentsTpl);
+
+    //generate controllers and patterns page
+    var filePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
+
+    if (!appConfig || appConfig.generatePatternsPage) {
+        enabledTemplates.push(filePath);
+
+        //generate patterns page
+        fs.writeFileSync(filePath, patternsTpl);
     }
-  };
+    else {
+        //delete patterns page if exists
+        try {
+            fs.unlinkSync(filePath);
+        } catch (e) {
+        }
 
-  glob.sync('./lib/atoms/**/*.js').forEach(function(file) { include(file, 'atoms'); });
-  glob.sync('./lib/molecules/**/*.js').forEach(function(file) { include(file, 'molecules'); });
-  glob.sync('./lib/organisms/**/*.js').forEach(function(file) { include(file, 'organisms'); });
-  glob.sync('./lib/templates/**/*.js').forEach(function(file) { include(file, 'templates'); });
+        //clean controllers
+        controllers = '';
+    }
 
-  //instantiate components imports and generate ngComponents.js
-  componentsTpl = componentsTpl
-    .replace('{ATOMS}', atoms)
-    .replace('{MOLECULES}', molecules)
-    .replace('{ORGANISMS}', organisms)
-    .replace('{TEMPLATES}', templates);
+    //instantiate controllers and generate ngControllers.js
+    controllersTpl = controllersTpl.replace(CONTROLLER_REGEX, controllers);
+    fs.writeFileSync('./lib/ngControllers.js', controllersTpl);
 
-  fs.writeFileSync('./lib/ngComponents.js', componentsTpl);
-
-  //generate controllers and patterns page
-  var filePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
-
-  if (!appConfig || appConfig.generatePatternsPage) {
-    enabledTemplates.push(filePath);
-
-    //generate patterns page
-    fs.writeFileSync(filePath, patternsTpl);
-  }
-  else {
-    //delete patterns page if exists
-    try { fs.unlinkSync(filePath); } catch(e) {}
-
-    //clean controllers
-    controllers = '';
-  }
-
-  //instantiate controllers and generate ngControllers.js
-  controllersTpl = controllersTpl.replace(CONTROLLER_REGEX, controllers);
-  fs.writeFileSync('./lib/ngControllers.js', controllersTpl);
-
-  cb();
+    cb();
 });
 
-gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function() {
-  return gulp.src(enabledTemplates, {base: path.resolve(__dirname + '/lib/')})
-    //generate templates cache into ngTemplates.js
-    .pipe(templateCache('ngTemplates.js', {
-      transformUrl: function(url) {
-        if (url.indexOf(PATTERNS_TEMPLATE_PAGE) >= 0)
-          return PATTERNS_TEMPLATE_PAGE;
-        else
-          return 'lnPatterns' + url;
-      },
-      templateHeader: TEMPLATE_CACHE_HEADER
-    }))
-    //write ngTemplates.js into lib folder
-    .pipe(gulp.dest('./lib'));
+gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function () {
+    return gulp.src(enabledTemplates, {base: path.resolve(__dirname + '/lib/')})
+        //generate templates cache into ngTemplates.js
+        .pipe(templateCache('ngTemplates.js', {
+            transformUrl: function (url) {
+                if (url.indexOf(PATTERNS_TEMPLATE_PAGE) >= 0)
+                    return PATTERNS_TEMPLATE_PAGE;
+                else
+                    return 'lnPatterns' + url;
+            },
+            templateHeader: TEMPLATE_CACHE_HEADER
+        }))
+        //write ngTemplates.js into lib folder
+        .pipe(gulp.dest('./lib'));
 });
 
 gulp.task('lnPatterns', ['lnPatternsTemplates']);
