@@ -6,6 +6,6 @@ node_modules/
 .idea
 
 #Module specific build artefacts
-lib/ng**.js
+lib/ng*.js
 lib/templates/patterns/*.html
 
