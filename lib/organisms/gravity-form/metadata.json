@@ -1,0 +1,9 @@
+{
+  "name": "ln-o-gravity-form",
+  "description": "Organism - Gravity Form",
+  "params": {
+    "id": "STRING",
+    "token": "STRING",
+    "data": "STRING"
+  }
+}
