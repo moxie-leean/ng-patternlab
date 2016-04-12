@@ -8,6 +8,7 @@ node_modules/
 lib/ngComponents.js
 lib/ngControllers.js
 lib/ngTemplates.js
+lib/templates/patterns/template.html
 
-lib/templates/patterns/*.html
-
+#Package
+ln-patterns-*.tgz
