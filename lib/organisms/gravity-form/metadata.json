@@ -3,7 +3,6 @@
   "description": "Organism - Gravity Form",
   "params": {
     "gfId": "STRING",
-    "token": "STRING",
     "data": "STRING"
   }
 }
