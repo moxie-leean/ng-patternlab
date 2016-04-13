@@ -2,7 +2,7 @@
   "name": "ln-a-h1",
   "description": "Atom - Header 1",
   "params": {
-    "title": "STRING",
-    "class": "STRING"
+    "lnTitle": "STRING",
+    "lnClass": "STRING"
   }
 }
