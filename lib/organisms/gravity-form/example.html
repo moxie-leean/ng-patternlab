@@ -1,1 +1,3 @@
-<ln-o-gravity-form gf-id="{{formId}}" data="{{formData}}"></ln-o-gravity-form>
+<ln-o-gravity-form form-id="{{vm.formId}}" on-submit="vm.onFormSubmit(response)" on-error="vm.onFormError(error)">
+    <input type="text" id="input_1" name="input_1" placeholder="Email" required/>
+</ln-o-gravity-form>
