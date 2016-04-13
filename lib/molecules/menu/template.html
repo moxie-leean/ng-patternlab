@@ -1,0 +1,15 @@
+<nav ng-class="$ctrl.lnClass" ng-if="$ctrl.lnItems.length">
+  <ul>
+    <li ng-repeat="item in $ctrl.lnItems" ng-class="item.class">
+      <a ng-href="{{item.link}}" ng-attr-target="{{item.new_window ? '_blank' : '_self'}}" >
+        {{item.title}}
+        <span ng-if="item.items.length" ng-class="$ctrl.lnParentIconClass"></span>
+      </a>
+      <ul ng-if="item.items.length">
+        <li ng-repeat="subItem in item.items" ng-class="subItem.class">
+          <a ng-href="{{subItem.link}}" ng-attr-target="{{subItem.new_window ? '_blank' : '_self'}}">{{subItem.title}}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
