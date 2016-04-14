@@ -2,7 +2,6 @@
   "name": "ln-m-menu",
   "description": "Molecule - Menu",
   "params": {
-    "lnClass": "STRING",
     "lnSelParentClass": "STRING",
     "lnSelItemClass": "STRING",
     "lnParentIconClass": "STRING",
