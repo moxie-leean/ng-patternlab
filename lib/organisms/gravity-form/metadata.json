@@ -2,8 +2,8 @@
   "name": "ln-o-gravity-form",
   "description": "Organism - Gravity Form",
   "params": {
-    "formId": "STRING",
-    "onSubmit": "FUNCTION",
-    "onError": "FUNCTION"
+    "lnOGravityForm": "STRING",
+    "gfSubmit": "FUNCTION",
+    "gfError": "FUNCTION"
   }
 }
