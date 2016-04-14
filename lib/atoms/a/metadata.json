@@ -1,10 +1,5 @@
 {
   "name": "ln-a-a",
   "description": "Atom - A Link",
-  "params": {
-    "title": "STRING",
-    "href": "STRING",
-    "target": "STRING",
-    "class": "STRING"
-  }
+  "params": {}
 }
