@@ -134,6 +134,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
                         examples += exampleHtml
                             .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
                             .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
+                            .replace(/{EXAMPLE_BG_COLOR}/g, (exampleInstance.bgColor || 'white'))
                             .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
                             .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
 
