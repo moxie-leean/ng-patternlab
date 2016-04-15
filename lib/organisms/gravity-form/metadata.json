@@ -3,7 +3,7 @@
   "description": "Organism - Gravity Form",
   "params": {
     "lnOGravityForm": "STRING",
-    "gfSubmit": "FUNCTION",
-    "gfError": "FUNCTION"
+    "lnSubmit": "FUNCTION",
+    "lnError": "FUNCTION"
   }
 }
