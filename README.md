@@ -30,6 +30,7 @@ The config file must have the following structure:
       "examples": [
         {
           "name": "Header 1",
+          "bgColor": "#105C93",
           "params": {
             "title": "Title 1"
           }

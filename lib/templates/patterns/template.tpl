@@ -13,7 +13,9 @@
     <hr/>
     <code style="display: block; margin: 10px 0 10px 0;"><b>{EXAMPLE_NAME}</b></code>
     <code style="display: block; margin: 10px 0 10px 0;">Params: {EXAMPLE_PARAMS}</code>
-    {EXAMPLE_INSTANCE}
+    <div style="background-color: {EXAMPLE_BG_COLOR};">
+      {EXAMPLE_INSTANCE}
+    </div>
   </div>
   {END_EXAMPLE}
 </div>
