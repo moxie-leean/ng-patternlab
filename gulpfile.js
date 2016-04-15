@@ -214,8 +214,11 @@ gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function () {
             transformUrl: function (url) {
                 if (url.indexOf(PATTERNS_TEMPLATE_PAGE) >= 0)
                     return PATTERNS_TEMPLATE_PAGE;
-                else
+                else {
+                    //@Andy Barrios - there seems to be an issue here with the generated template address being incorrect
+                    // This is hack fix for the moment!
                     return /*'lnPatterns' +*/ url.substring(1);
+                }
             },
             templateHeader: TEMPLATE_CACHE_HEADER
         }))
