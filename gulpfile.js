@@ -214,8 +214,9 @@ gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function () {
             transformUrl: function (url) {
                 if (url.indexOf(PATTERNS_TEMPLATE_PAGE) >= 0)
                     return PATTERNS_TEMPLATE_PAGE;
-                else
+                else {
                     return 'lnPatterns' + url;
+                }
             },
             templateHeader: TEMPLATE_CACHE_HEADER
         }))
