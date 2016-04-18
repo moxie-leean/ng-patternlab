@@ -3,6 +3,7 @@
 <div style="width: 100%;" ng-controller="lnPatternsController">
   <div style="color: #222; background: #fff; top: 0; left: 0; overflow-y: scroll; overflow-x: hidden; position: fixed; white-space: nowrap; width: 20%; font: 1em/1.7 'Helvetica Neue',Helvetica,Arial,sans-serif; height: 70%;">
     <div>
+      <input type="color" ng-model="color" style="border: 2px solid transparent; border-radius: 0px; width: 100%; height: 30px; padding: 3px;">
       <h2 style="margin-top: 5px; margin-bottom: 10px; padding: 0 10px; font-size: 15pt;"><code style="font-weight: 400; font-family: Consolas,Courier New,monospace;">Atoms:</code></h2>
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {ATOM_LINK}
@@ -77,6 +78,6 @@
     </div>
   </div>
   <div style="bottom: 0; left: 0; overflow: hidden; position: fixed; width: 100%; height: 30%; overflow-x: hidden; border-top: 2px solid #ddd;">
-    <iframe ng-src="{{currentExampleUrl}}" width="100%" height="98%" scrolling="auto" style="border: 0;"></iframe>
+    <iframe ng-src="{{currentExampleUrl}}" width="100%" height="98%" scrolling="auto" style="border: 0;" ng-style="{'background-color': color}"></iframe>
   </div>
 </div>

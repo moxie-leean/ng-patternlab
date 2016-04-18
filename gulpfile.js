@@ -105,20 +105,27 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   var exampleTpl = EXAMPLE_REGEX.exec(examplesPageTpl)[0];
   exampleTpl = exampleTpl.replace('{EXAMPLE}', '').replace('{END_EXAMPLE}', '');
 
-  var include = function (file, collection) {
+  var include = function (file, collection, compCustom) {
     var splitted = file.split('/');
-    var folder = splitted.slice(2, -1).join('/');
+    var folder = splitted.slice(0, -1).join('/');
     var filename = splitted.pop().replace('.json', '').replace('.js', '');
     var compEnabled = true;
     var compConfig = null;
+    var baseDir = './lib/';
+    var compName = folder.replace(baseDir, '');
 
     //check if the component is enabled in the application config file
     if (appConfig) {
+      if (compCustom) {
+        baseDir = appConfig.customComponentsLocation;
+        compName = folder.replace(baseDir, '');
+      }
+
       if (!_.has(appConfig, 'enabledComponents')) {
         compEnabled = false;
       }
       else if (_.isArray(appConfig.enabledComponents)) {
-        compConfig = _.find(appConfig.enabledComponents, {'component': folder});
+        compConfig = _.find(appConfig.enabledComponents, {'component': compName, 'custom': compCustom});
 
         if (!compConfig) {
           compEnabled = false;
@@ -129,28 +136,28 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
       }
     }
 
-    if (compEnabled) {
+    if (compEnabled && baseDir != '') {
       var linkTpl = '';
 
       //get component metadata
-      var metadata = require('./lib/' + folder + '/metadata.json');
+      var metadata = require(baseDir + compName + '/metadata.json');
 
       //include import string and link into the corresponding atomic type
-      var reqStr = "require('./" + folder + "/" + filename + "');\n";
+      var reqStr = "require('./" + compName + "/" + filename + "');\n";
 
       if (collection == 'atoms') {
         linkTpl = atomLinkTpl;
       }
       else if (collection == 'molecules') {
-        molecules += reqStr;
+        molecules += compCustom ? '' : reqStr;
         linkTpl = moleculeLinkTpl;
       }
       else if (collection == 'organisms') {
-        organisms += reqStr;
+        organisms += compCustom ? '' : reqStr;
         linkTpl = organismLinkTpl;
       }
       else if (collection == 'templates') {
-        templates += reqStr;
+        templates += compCustom ? '' : reqStr;
         linkTpl = templateLinkTpl;
       }
 
@@ -177,7 +184,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
         }
 
         //get component example instance html
-        var exampleInstanceHtml = fs.readFileSync('./lib/' + folder + '/example.html', ENCODING);
+        var exampleInstanceHtml = fs.readFileSync(baseDir + compName + '/example.html', ENCODING);
 
         //generate examples with instantiated parameters
         var examples = '';
@@ -201,7 +208,6 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
 
             examplesPage += exampleTpl
               .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
-              .replace(/{EXAMPLE_BG_COLOR}/g, (exampleInstance.bgColor || 'white'))
               .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
           }
         }
@@ -215,29 +221,45 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
           .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
           .replace(EXAMPLE_REGEX, examples);
 
-        if (collection != 'atoms') {
+        if (collection != 'atoms' && !compCustom) {
           //add component path to the enabled templates list
-          enabledTemplates.push('./lib/' + folder + '/template.html');
+          enabledTemplates.push(baseDir + compName + '/template.html');
         }
       }
     }
   };
 
-  glob.sync('./lib/atoms/**/metadata.json').forEach(function (file) {
-    include(file, 'atoms');
-  });
+  var customSearch = false;
 
-  glob.sync('./lib/molecules/**/*.js').forEach(function (file) {
-    include(file, 'molecules');
-  });
+  var includeAtom = function(file) {
+    include(file, 'atoms', customSearch);
+  };
 
-  glob.sync('./lib/organisms/**/*.js').forEach(function (file) {
-    include(file, 'organisms');
-  });
+  var includeMolecule = function(file) {
+    include(file, 'molecules', customSearch);
+  };
 
-  glob.sync('./lib/templates/**/*.js').forEach(function (file) {
-    include(file, 'templates');
-  });
+  var includeOrganism = function(file) {
+    include(file, 'organisms', customSearch);
+  };
+
+  var includeTemplate = function(file) {
+    include(file, 'templates', customSearch);
+  }; 
+
+  glob.sync('./lib/atoms/**/metadata.json').forEach(includeAtom);
+  glob.sync('./lib/molecules/**/*.js').forEach(includeMolecule);
+  glob.sync('./lib/organisms/**/*.js').forEach(includeOrganism);
+  glob.sync('./lib/templates/**/*.js').forEach(includeTemplate);
+
+  if (appConfig && appConfig.customComponentsLocation != '') {
+    customSearch = true;
+
+    glob.sync(appConfig.customComponentsLocation + '/atoms/**/metadata.json').forEach(includeAtom);
+    glob.sync(appConfig.customComponentsLocation + '/molecules/**/*.js').forEach(includeMolecule);
+    glob.sync(appConfig.customComponentsLocation + '/organisms/**/*.js').forEach(includeOrganism);
+    glob.sync(appConfig.customComponentsLocation + '/templates/**/*.js').forEach(includeTemplate);
+  }
 
   //instantiate components imports and generate ngComponents.js
   componentsTpl = componentsTpl
@@ -281,7 +303,12 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   }
 
   //instantiate controllers and generate ngControllers.js
-  controllersTpl = controllersTpl.replace(CONTROLLER_REGEX, controllers);
+  var defaultBgColor = (appConfig && appConfig.examplesBackgroundColor) ? appConfig.examplesBackgroundColor : '#FFFFFF';
+
+  controllersTpl = controllersTpl
+    .replace(/{EXAMPLES_BG_COLOR}/g, defaultBgColor)
+    .replace(CONTROLLER_REGEX, controllers);
+
   fs.writeFileSync('./lib/ngControllers.js', controllersTpl);
 
   cb();
