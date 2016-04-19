@@ -1,0 +1,50 @@
+.ln-o-gravity-form {
+
+  .hidden {
+    display: none !important;
+  }
+
+  &-header {
+
+    h3 {
+      & .title {
+
+      }
+    }
+
+    span {
+      & .description {
+
+      }
+    }
+
+  }
+
+  &-body {
+
+    ul {
+      list-style-type: none;
+
+      & .fields {
+
+      }
+
+      li {
+        & .field {
+
+        }
+      }
+    }
+
+  }
+
+  &-footer {
+
+    button {
+      & .submit {
+
+      }
+    }
+
+  }
+}
