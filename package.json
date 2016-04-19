@@ -1,5 +1,5 @@
 {
-  "name": "ln-patterns",
+  "name": "ln-patternlab",
   "version": "0.1.0",
   "description": "An AngularJS module for Lean Patterns.",
   "main": "index.js",
