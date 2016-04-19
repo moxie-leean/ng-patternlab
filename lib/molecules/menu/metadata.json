@@ -1,0 +1,19 @@
+{
+  "name": "ln-m-menu",
+  "description": "Molecule - Menu",
+  "params": {
+    "lnSelParentClass": "STRING",
+    "lnSelItemClass": "STRING",
+    "lnParentIconClass": "STRING",
+    "lnItems": [{
+      "title": "STRING",
+      "link": "STRING",
+      "new_window": "BOOLEAN",
+      "items": [{
+        "title": "STRING",
+        "link": "STRING",
+        "new_window": "BOOLEAN"
+      }]
+    }]
+  }
+}

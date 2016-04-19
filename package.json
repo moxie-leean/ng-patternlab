@@ -12,8 +12,18 @@
     "lodash": "^4.8.2",
     "shelljs": "^0.6.0"
   },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-plugin-angular": "^0.15.0",
+    "sass-lint": "^1.5.0"
+  },
   "bin": {
     "ln-patterns": "./build.js"
+  },
+  "scripts": {
+    "ci": "npm run js:ci -s && npm run styles:ci -s",
+    "js:ci": "eslint lib/\\*\\*/\\*.js",
+    "styles:ci": "sass-lint lib/\\*\\*/\\*.scss -v -q"
   },
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
   "license": "MIT"
