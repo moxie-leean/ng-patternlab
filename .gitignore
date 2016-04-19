@@ -1,5 +1,6 @@
 #NPM
 node_modules/
+*.log
 
 #IDE Specific
 .idea
