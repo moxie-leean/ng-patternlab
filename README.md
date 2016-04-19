@@ -8,7 +8,7 @@
 The easiest way to install this package is by using npm from your terminal:
 
 ```
-npm install ln-patterns --save-dev
+npm install ln-patternlab --save-dev
 ```
 
 
@@ -92,7 +92,7 @@ npm run postinstall
 Then you can add the module as a dependency on your AngularJS application:
 
 ```javascript
-require('ln-patterns');
+require('ln-patternlab');
 
 angular
   .module('app', [
