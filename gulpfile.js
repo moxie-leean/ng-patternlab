@@ -21,11 +21,17 @@ var COMMON_HEADER_HTML = '<!-- ' + COMMON_HEADER + ' -->';
 var TEMPLATE_CACHE_HEADER = COMMON_HEADER_JS + '\n\n' + 'angular.module("lnPatterns").run(["$templateCache", function($templateCache) {';
 var PATTERNS_TEMPLATE = 'templates/patterns/template';
 var PATTERNS_TEMPLATE_PAGE = PATTERNS_TEMPLATE + '.html';
+var EXAMPLES_TEMPLATE = 'templates/examples/template';
+var EXAMPLES_TEMPLATE_PAGE = EXAMPLES_TEMPLATE + '.html';
 var ENCODING = 'utf8';
 var HEADER_REGEX = /\/\*\*\*.*\*\*\*\//;
 var COMPONENT_REGEX = /{COMPONENT}[\s\S]*{END_COMPONENT}/m;
 var EXAMPLE_REGEX = /{EXAMPLE}[\s\S]*{END_EXAMPLE}/m;
 var CONTROLLER_REGEX = /{CONTROLLER}[\s\S]*{END_CONTROLLER}/m;
+var ATOM_LINK_REGEX = /{ATOM_LINK}[\s\S]*{END_ATOM_LINK}/m;
+var MOLECULE_LINK_REGEX = /{MOLECULE_LINK}[\s\S]*{END_MOLECULE_LINK}/m;
+var ORGANISM_LINK_REGEX = /{ORGANISM_LINK}[\s\S]*{END_ORGANISM_LINK}/m;
+var TEMPLATE_LINK_REGEX = /{TEMPLATE_LINK}[\s\S]*{END_TEMPLATE_LINK}/m;
 
 //
 // global variables
@@ -53,6 +59,12 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   var organisms = '';
   var templates = '';
   var controllers = '';
+  var patterns = '';
+  var atomLinks = '';
+  var moleculeLinks = '';
+  var organismLinks = '';
+  var templateLinks = '';
+  var examplesPage = '';
   var count = 0;
 
   //read tpl files
@@ -65,6 +77,9 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   var patternsTpl = fs.readFileSync('./lib/' + PATTERNS_TEMPLATE + '.tpl', ENCODING);
   patternsTpl = patternsTpl.replace(HEADER_REGEX, COMMON_HEADER_HTML);
 
+  var examplesPageTpl = fs.readFileSync('./lib/' + EXAMPLES_TEMPLATE + '.tpl', ENCODING);
+  examplesPageTpl = examplesPageTpl.replace(HEADER_REGEX, COMMON_HEADER_HTML);
+
   //get component and example htmls and controller js from tpls
   var componentHtml = COMPONENT_REGEX.exec(patternsTpl)[0];
   componentHtml = componentHtml.replace('{COMPONENT}', '').replace('{END_COMPONENT}', '');
@@ -75,23 +90,42 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   var controllerJs = CONTROLLER_REGEX.exec(controllersTpl)[0];
   controllerJs = controllerJs.replace('{CONTROLLER}', '').replace('{END_CONTROLLER}', '');
 
-  //clean patterns tpl
-  patternsTpl = patternsTpl.replace(COMPONENT_REGEX, '');
+  var atomLinkTpl = ATOM_LINK_REGEX.exec(patternsTpl)[0];
+  atomLinkTpl = atomLinkTpl.replace('{ATOM_LINK}', '').replace('{END_ATOM_LINK}', '');
 
-  var include = function (file, collection) {
+  var moleculeLinkTpl = MOLECULE_LINK_REGEX.exec(patternsTpl)[0];
+  moleculeLinkTpl = moleculeLinkTpl.replace('{MOLECULE_LINK}', '').replace('{END_MOLECULE_LINK}', '');
+
+  var organismLinkTpl = ORGANISM_LINK_REGEX.exec(patternsTpl)[0];
+  organismLinkTpl = organismLinkTpl.replace('{ORGANISM_LINK}', '').replace('{END_ORGANISM_LINK}', '');
+
+  var templateLinkTpl = TEMPLATE_LINK_REGEX.exec(patternsTpl)[0];
+  templateLinkTpl = templateLinkTpl.replace('{TEMPLATE_LINK}', '').replace('{END_TEMPLATE_LINK}', '');
+
+  var exampleTpl = EXAMPLE_REGEX.exec(examplesPageTpl)[0];
+  exampleTpl = exampleTpl.replace('{EXAMPLE}', '').replace('{END_EXAMPLE}', '');
+
+  var include = function (file, collection, compCustom) {
     var splitted = file.split('/');
-    var folder = splitted.slice(2, -1).join('/');
+    var folder = splitted.slice(0, -1).join('/');
     var filename = splitted.pop().replace('.json', '').replace('.js', '');
     var compEnabled = true;
     var compConfig = null;
+    var baseDir = './lib/';
+    var compName = folder.replace(baseDir, '');
 
     //check if the component is enabled in the application config file
     if (appConfig) {
+      if (compCustom) {
+        baseDir = appConfig.customComponentsLocation;
+        compName = folder.replace(baseDir, '');
+      }
+
       if (!_.has(appConfig, 'enabledComponents')) {
         compEnabled = false;
       }
       else if (_.isArray(appConfig.enabledComponents)) {
-        compConfig = _.find(appConfig.enabledComponents, {'component': folder});
+        compConfig = _.find(appConfig.enabledComponents, {'component': compName, 'custom': compCustom});
 
         if (!compConfig) {
           compEnabled = false;
@@ -102,28 +136,55 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
       }
     }
 
-    if (compEnabled) {
+    if (compEnabled && baseDir != '') {
+      var linkTpl = '';
+
       //get component metadata
-      var metadata = require('./lib/' + folder + '/metadata.json');
+      var metadata = require(baseDir + compName + '/metadata.json');
 
-      //include import string into the corresponding atomic type
-      var reqStr = "require('./" + folder + "/" + filename + "');\n";
+      //include import string and link into the corresponding atomic type
+      var reqStr = "require('./" + compName + "/" + filename + "');\n";
 
-      if (collection == 'molecules') {
-        molecules += reqStr;
+      if (collection == 'atoms') {
+        linkTpl = atomLinkTpl;
+      }
+      else if (collection == 'molecules') {
+        molecules += compCustom ? '' : reqStr;
+        linkTpl = moleculeLinkTpl;
       }
       else if (collection == 'organisms') {
-        organisms += reqStr;
+        organisms += compCustom ? '' : reqStr;
+        linkTpl = organismLinkTpl;
       }
       else if (collection == 'templates') {
-        templates += reqStr;
+        templates += compCustom ? '' : reqStr;
+        linkTpl = templateLinkTpl;
       }
 
       if (collection == 'atoms' || filename.indexOf('directive') >= 0 || filename.indexOf('component') >= 0) {
         count += 1;
 
+        var componentId = 'component_' + count;
+
+        var linkHtml = linkTpl
+          .replace(/{LINK_ID}/g, componentId)
+          .replace(/{LINK_NAME}/g, metadata.name);
+
+        if (collection == 'atoms') {
+          atomLinks += linkHtml;
+        }
+        else if (collection == 'molecules') {
+          moleculeLinks += linkHtml;
+        }
+        else if (collection == 'organisms') {
+          organismLinks += linkHtml;
+        }
+        else if (collection == 'templates') {
+          templateLinks += linkHtml;
+        }
+
         //get component example instance html
-        var exampleInstanceHtml = fs.readFileSync('./lib/' + folder + '/example.html', ENCODING);
+        var exampleInstanceHtml = fs.readFileSync(baseDir + compName + '/example.html', ENCODING);
 
         //generate examples with instantiated parameters
         var examples = '';
@@ -131,53 +192,74 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
         if (compConfig && _.has(compConfig, 'examples') && _.isArray(compConfig.examples)) {
           for (var i = 0; i < compConfig.examples.length; i++) {
             var exampleInstance = compConfig.examples[i];
-            var controllerName = 'lnController_' + count + '_' + i;
+            var exampleId = count + '_' + i;
+            var controllerName = 'lnController_' + exampleId;
             var controllerAttrs = JSON.stringify(exampleInstance.params);
 
             examples += exampleHtml
-              .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
+              .replace(/{EXAMPLE_ID}/g, exampleId)
               .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
-              .replace(/{EXAMPLE_BG_COLOR}/g, (exampleInstance.bgColor || 'white'))
-              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs)
-              .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
+              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs);
 
             controllers += controllerJs
               .replace(/{CONTROLLER_NAME}/g, controllerName)
-              .replace(/{CONTROLLER_ATTRIBUTES}/g, controllerAttrs);
+              .replace(/{CONTROLLER_ATTRIBUTES}/g, controllerAttrs)
+              .replace(/{EXAMPLE_ID}/g, exampleId);
+
+            examplesPage += exampleTpl
+              .replace(/{EXAMPLE_CONTROLLER}/g, controllerName)
+              .replace(/{EXAMPLE_INSTANCE}/g, exampleInstanceHtml);
           }
         }
 
         //instantiate component html and include into patterns tpl
-        patternsTpl += componentHtml
+        patterns += componentHtml
+          .replace(/{COMPONENT_ID}/g, componentId)
           .replace(/{COMPONENT_NAME}/g, metadata.name)
           .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
           .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
           .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
           .replace(EXAMPLE_REGEX, examples);
 
-        if (collection != 'atoms') {
+        if (collection != 'atoms' && !compCustom) {
           //add component path to the enabled templates list
-          enabledTemplates.push('./lib/' + folder + '/template.html');
+          enabledTemplates.push(baseDir + compName + '/template.html');
         }
       }
     }
   };
 
-  glob.sync('./lib/atoms/**/metadata.json').forEach(function (file) {
-    include(file, 'atoms');
-  });
+  var customSearch = false;
 
-  glob.sync('./lib/molecules/**/*.js').forEach(function (file) {
-    include(file, 'molecules');
-  });
+  var includeAtom = function(file) {
+    include(file, 'atoms', customSearch);
+  };
 
-  glob.sync('./lib/organisms/**/*.js').forEach(function (file) {
-    include(file, 'organisms');
-  });
+  var includeMolecule = function(file) {
+    include(file, 'molecules', customSearch);
+  };
 
-  glob.sync('./lib/templates/**/*.js').forEach(function (file) {
-    include(file, 'templates');
-  });
+  var includeOrganism = function(file) {
+    include(file, 'organisms', customSearch);
+  };
+
+  var includeTemplate = function(file) {
+    include(file, 'templates', customSearch);
+  }; 
+
+  glob.sync('./lib/atoms/**/metadata.json').forEach(includeAtom);
+  glob.sync('./lib/molecules/**/*.js').forEach(includeMolecule);
+  glob.sync('./lib/organisms/**/*.js').forEach(includeOrganism);
+  glob.sync('./lib/templates/**/*.js').forEach(includeTemplate);
+
+  if (appConfig && appConfig.customComponentsLocation != '') {
+    customSearch = true;
+
+    glob.sync(appConfig.customComponentsLocation + '/atoms/**/metadata.json').forEach(includeAtom);
+    glob.sync(appConfig.customComponentsLocation + '/molecules/**/*.js').forEach(includeMolecule);
+    glob.sync(appConfig.customComponentsLocation + '/organisms/**/*.js').forEach(includeOrganism);
+    glob.sync(appConfig.customComponentsLocation + '/templates/**/*.js').forEach(includeTemplate);
+  }
 
   //instantiate components imports and generate ngComponents.js
   componentsTpl = componentsTpl
@@ -187,19 +269,33 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
 
   fs.writeFileSync('./lib/ngComponents.js', componentsTpl);
 
-  //generate controllers and patterns page
-  var filePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
+  //generate controllers, patterns and examples pages
+  var templatesFilePath = './lib/' + PATTERNS_TEMPLATE_PAGE;
+  var examplesFilePath = './lib/' + EXAMPLES_TEMPLATE_PAGE;
 
   if (!appConfig || appConfig.generatePatternsPage) {
-    enabledTemplates.push(filePath);
+    enabledTemplates.push(templatesFilePath);
+    enabledTemplates.push(examplesFilePath);
 
-    //generate patterns page
-    fs.writeFileSync(filePath, patternsTpl);
+    //instantiate patterns and generate patterns page
+    patternsTpl = patternsTpl
+      .replace(ATOM_LINK_REGEX, atomLinks)
+      .replace(MOLECULE_LINK_REGEX, moleculeLinks)
+      .replace(ORGANISM_LINK_REGEX, organismLinks)
+      .replace(TEMPLATE_LINK_REGEX, templateLinks)
+      .replace(COMPONENT_REGEX, patterns);
+
+    fs.writeFileSync(templatesFilePath, patternsTpl);
+
+    //instantiate examples and generate examples page
+    examplesPageTpl = examplesPageTpl.replace(EXAMPLE_REGEX, examplesPage);
+    fs.writeFileSync(examplesFilePath, examplesPageTpl);
   }
   else {
     //delete patterns page if exists
     try {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(templatesFilePath);
+      fs.unlinkSync(examplesFilePath);
     } catch (e) {}
 
     //clean controllers
@@ -207,7 +303,12 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   }
 
   //instantiate controllers and generate ngControllers.js
-  controllersTpl = controllersTpl.replace(CONTROLLER_REGEX, controllers);
+  var defaultBgColor = (appConfig && appConfig.examplesBackgroundColor) ? appConfig.examplesBackgroundColor : '#FFFFFF';
+
+  controllersTpl = controllersTpl
+    .replace(/{EXAMPLES_BG_COLOR}/g, defaultBgColor)
+    .replace(CONTROLLER_REGEX, controllers);
+
   fs.writeFileSync('./lib/ngControllers.js', controllersTpl);
 
   cb();
@@ -220,6 +321,9 @@ gulp.task('lnPatternsTemplates', ['lnPatternsComponents'], function () {
       transformUrl: function (url) {
         if (url.indexOf(PATTERNS_TEMPLATE_PAGE) >= 0) {
           return PATTERNS_TEMPLATE_PAGE;
+        }
+        else if (url.indexOf(EXAMPLES_TEMPLATE_PAGE) >= 0) {
+          return EXAMPLES_TEMPLATE_PAGE;
         }
         else {
           return 'lnPatterns' + url;
