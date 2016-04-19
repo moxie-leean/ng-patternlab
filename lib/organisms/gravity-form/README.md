@@ -79,9 +79,6 @@ If `ln-load-from-api === false`, then you can place your form tags inside the fo
 
 These elements will need to be named correctly (the same as the corresponding elements in form on the WordPress admin site). Please note you must also add the Submit button, though the component will detect when Submit is clicked and trigger the submission process. 
 
-#### NOTE: Currently, 'ln-load-from-api' MUST be set to false as there is a problem with authenticating requests to load forms from the API. If you set this to `true`, a HTML error will be rendered in place of the form.
-
-
 Responses from the API are forwarded as-per the documentation, so for a successful submission: 
 
 ```
