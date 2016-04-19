@@ -20,15 +20,29 @@ angular
     .module('app', ['lnPatterns'])
     .config(['$lnOGravityFormConfigProvider', function($lnOGravityFormConfigProvider) {
         $lnOGravityFormConfigProvider.setConfig({
-            url: 'http://wp.skaled.moxie-staging.com/gravityformsapi',
-            key: 'a53cef0349',
-            sigUrl: 'TBC',
-            sigCallback: 'TBC'
+            api_base: 'http://wp.skaled.moxie-staging.com/gravityformsapi',
+            api_key: 'a53cef0349',
+            forms: {
+                '1': {
+                    'get_form: {
+                        'route': 'forms/1',
+                        'signature: 'serverGeneratedSignatureString',
+                        'expires: 'serverGeneratedExpiresTimestamp'
+                    },
+                    'post_submission: {
+                      'route': 'forms/1/submissions',
+                    }
+                },
+                '2': {
+                    ...
+                },
+                ...
+            }
         });
     });
 ```
 
-Currently, the only required _genuine_ parameters are 'url' and 'key', 'sigUrl' and 'sigCallback' are placeholders and can contain fake values.
+Currently, the required parameters are 'api_base' and 'api_key', 'forms' is an object keyed by form ID, with required parameters for each route.
 
 Once you have configured the component, you can use the form directive:
 
@@ -64,9 +78,6 @@ If `ln-load-from-api === false`, then you can place your form tags inside the fo
 ```
 
 These elements will need to be named correctly (the same as the corresponding elements in form on the WordPress admin site). Please note you must also add the Submit button, though the component will detect when Submit is clicked and trigger the submission process. 
-
-#### NOTE: Currently, 'ln-load-from-api' MUST be set to false as there is a problem with authenticating requests to load forms from the API. If you set this to `true`, a HTML error will be rendered in place of the form.
-
 
 Responses from the API are forwarded as-per the documentation, so for a successful submission: 
 
