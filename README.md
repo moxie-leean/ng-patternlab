@@ -22,7 +22,8 @@ The config file must have the following structure:
 // config/patterns.json
 {
   "generatePatternsPage": true,
-  "customComponentsLocation": "../../app",
+  "customComponentsLocation": "../../app/",
+  "examplesBackgroundColor": "#FFFFFF",
   "enabledComponents": [
     {
       "component": "atoms/h1",
@@ -30,7 +31,6 @@ The config file must have the following structure:
       "examples": [
         {
           "name": "Header 1",
-          "bgColor": "#105C93",
           "params": {
             "title": "Title 1"
           }
@@ -108,4 +108,11 @@ And use the components as you need inside your templates. Here are some examples
 <ln-a-h2 title="{{title}}" class="{{class}}"></ln-a-h2>
 ```
 
-NOTE: To access the patterns page you can setup an AngularJS route to the following template key: **templates/patterns/template.html**. That key is automatically bound to the gererated html on the AngularJS $templateCache.
+NOTE: To access the patterns page you must setup two AngularJS routes to the following template keys: 
+
+```
+Patterns route: /patterns => templates/patterns/template.html
+Examples route: /examples/:exampleId => templates/examples/template.html
+```
+
+Those keys are automatically bound to the gererated html on the AngularJS $templateCache.
