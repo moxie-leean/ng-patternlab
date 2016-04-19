@@ -78,12 +78,9 @@
     "no-class-assign": 2,
     "no-const-assign": 2,
     "no-dupe-class-members": 2,
-    "prefer-const": 2,
-    "prefer-template": 2,
     "arrow-spacing": 2
   },
   "env": {
-    "es6": true,
     "browser": true,
     "node": true,
     "amd": true
