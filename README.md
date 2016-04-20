@@ -104,8 +104,7 @@ angular
 And use the components as you need inside your templates. Here are some examples:
 
 ```html
-<ln-a-h1 title="{{title}}" class="{{class}}"></ln-a-h1>
-<ln-a-h2 title="{{title}}" class="{{class}}"></ln-a-h2>
+<nav class="{{class}}" ln-m-menu ln-sel-parent-class="{{selParentClass}}" ln-sel-item-class="{{selItemClass}}" ln-parent-icon-class="{{parentIconClass}}" ln-items="items"></nav>
 ```
 
 NOTE: To access the patterns page you must setup two AngularJS routes to the following template keys: 
