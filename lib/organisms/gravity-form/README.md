@@ -11,7 +11,7 @@ npm install ln-patterns --save
 then require it in your site setup:
 
 ```
-require('ln-patterns');
+require('ln-patternlab');
 ```
 and finally, declare it as a dependency in your Angular app and configure it like so:
 
@@ -43,6 +43,23 @@ angular
 ```
 
 Currently, the required parameters are 'api_base' and 'api_key', 'forms' is an object keyed by form ID, with required parameters for each route.
+
+PLEASE NOTE: The component can also be configured in the 'Run' phase in the situation that config data is not available in the Config phase, to do this, in your Run method,
+use something like:
+
+```
+angular
+    .module('app', ['lnPatterns'])
+    .run(['lnGravityFormService', '$http', 'DATA_URL', function(lnGravityFormService, $http, DATA_URL) {
+        $http
+            .get(DATA_URL)
+            .then(function (response) {
+                lnOGravityFormService.setConfig(response.data.gravity_forms);
+            }, function (error) {
+                $log.error('Run ->', error);
+            });
+    }])
+```
 
 Once you have configured the component, you can use the form directive:
 
