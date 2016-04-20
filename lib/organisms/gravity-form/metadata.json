@@ -4,6 +4,7 @@
   "params": {
     "lnOGravityForm": "STRING",
     "lnSubmit": "FUNCTION",
-    "lnError": "FUNCTION"
+    "lnError": "FUNCTION",
+    "lnLoadFromApi": "BOOLEAN"
   }
 }
