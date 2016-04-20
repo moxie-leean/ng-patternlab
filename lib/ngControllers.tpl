@@ -18,6 +18,7 @@ angular
     var urlArray = $location.path().split('/');
     var example = urlArray.length > 0 ? urlArray.pop() : '';
     $scope.show = (example == '{EXAMPLE_ID}');
+    $scope.alert = function(text) { alert(text); };
   }])
   {END_CONTROLLER}
 ;
