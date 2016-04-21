@@ -1,0 +1,25 @@
+{
+  "name": "ln-m-widget-contact",
+  "description": "Molecule - Contact Details Widget",
+  "params": {
+    "lnContent": {
+      "title": "STRING",
+      "logo": {
+        "class": "STRING",
+        "src": "STRING"
+      },
+      "address": {
+        "class": "STRING",
+        "text": "STRING"
+      },
+      "phone": {
+        "class": "STRING",
+        "number": "STRING"
+      },
+      "email": {
+        "class": "STRING",
+        "address": "STRING"
+      }
+    }
+  }
+}

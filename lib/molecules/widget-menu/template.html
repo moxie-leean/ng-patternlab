@@ -1,0 +1,6 @@
+<h4 ng-if="lnContent.title">{{lnContent.title}}</h4>
+<ul ng-if="lnContent.items.length">
+  <li ng-repeat="item in lnContent.items">
+    <a href="{{item.link}}" ng-if="item.title">{{item.title}}</a>
+  </li>
+</ul>
