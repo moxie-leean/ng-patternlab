@@ -11,7 +11,7 @@ npm install ln-patterns --save
 then require it in your site setup:
 
 ```
-require('ln-patternlab');
+require('ln-patterns');
 ```
 and finally, declare it as a dependency in your Angular app and configure it like so:
 
@@ -44,7 +44,7 @@ angular
 
 Currently, the required parameters are 'api_base' and 'api_key', 'forms' is an object keyed by form ID, with required parameters for each route.
 
-PLEASE NOTE: The component can also be configured in the 'Run' phase in the situation that config data is not available in the Config phase, to do this, in your Run method,
+NOTE: The component can also be configured in the 'Run' phase in the situation that config data is not available in the Config phase, to do this, in your Run method,
 use something like:
 
 ```
