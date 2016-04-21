@@ -1,0 +1,11 @@
+{
+  "name": "ln-o-widgets-area",
+  "description": "Organism - Widgets Area",
+  "params": {
+    "lnWidgets": [{
+      "type": "STRING",
+      "class": "STRING",
+      "content": "OBJECT"
+    }]
+  }
+}
