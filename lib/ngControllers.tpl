@@ -5,7 +5,7 @@ angular
   .controller('lnPatternsController', ['$scope', '$sce', function($scope, $sce) {
     $scope.color = '{EXAMPLES_BG_COLOR}';
     $scope.changeExample = function(exampleId) {
-      $scope.currentExampleUrl = $sce.trustAsResourceUrl('/#/examples/' + exampleId);
+      $scope.currentExampleUrl = $sce.trustAsResourceUrl('/{EXAMPLES_ROUTE}/' + exampleId);
     };
   }])
   {CONTROLLER}

@@ -32,6 +32,9 @@ var ATOM_LINK_REGEX = /{ATOM_LINK}[\s\S]*{END_ATOM_LINK}/m;
 var MOLECULE_LINK_REGEX = /{MOLECULE_LINK}[\s\S]*{END_MOLECULE_LINK}/m;
 var ORGANISM_LINK_REGEX = /{ORGANISM_LINK}[\s\S]*{END_ORGANISM_LINK}/m;
 var TEMPLATE_LINK_REGEX = /{TEMPLATE_LINK}[\s\S]*{END_TEMPLATE_LINK}/m;
+var DEFAULT_PATTERNS_ROUTE = '#/patterns';
+var DEFAULT_EXAMPLES_ROUTE = '#/examples';
+var DEFAULT_EXAMPLES_BG_COLOR = '#FFFFFF';
 
 //
 // global variables
@@ -113,12 +116,17 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
     var compConfig = null;
     var baseDir = './lib/';
     var compName = folder.replace(baseDir, '');
+    var patternsRoute = DEFAULT_PATTERNS_ROUTE;
 
     //check if the component is enabled in the application config file
     if (appConfig) {
       if (compCustom) {
         baseDir = appConfig.customComponentsLocation;
         compName = folder.replace(baseDir, '');
+      }
+
+      if (_.has(appConfig, 'patternsRoute') && appConfig.patternsRoute != '') {
+        patternsRoute = appConfig.patternsRoute;
       }
 
       if (!_.has(appConfig, 'enabledComponents')) {
@@ -167,6 +175,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
         var componentId = 'component_' + count;
 
         var linkHtml = linkTpl
+          .replace(/{PATTERNS_ROUTE}/g, patternsRoute)
           .replace(/{LINK_ID}/g, componentId)
           .replace(/{LINK_NAME}/g, metadata.name);
 
@@ -303,10 +312,12 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
   }
 
   //instantiate controllers and generate ngControllers.js
-  var defaultBgColor = (appConfig && appConfig.examplesBackgroundColor) ? appConfig.examplesBackgroundColor : '#FFFFFF';
+  var examplesRoute = (appConfig && appConfig.examplesRoute) ? appConfig.examplesRoute : DEFAULT_EXAMPLES_ROUTE;
+  var examplesBgColor = (appConfig && appConfig.examplesBackgroundColor) ? appConfig.examplesBackgroundColor : DEFAULT_EXAMPLES_BG_COLOR;
 
   controllersTpl = controllersTpl
-    .replace(/{EXAMPLES_BG_COLOR}/g, defaultBgColor)
+    .replace(/{EXAMPLES_ROUTE}/g, examplesRoute)
+    .replace(/{EXAMPLES_BG_COLOR}/g, examplesBgColor)
     .replace(CONTROLLER_REGEX, controllers);
 
   fs.writeFileSync('./lib/ngControllers.js', controllersTpl);

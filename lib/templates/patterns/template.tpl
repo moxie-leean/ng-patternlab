@@ -7,7 +7,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {ATOM_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -17,7 +17,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {MOLECULE_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -27,7 +27,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {ORGANISM_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -37,7 +37,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {TEMPLATE_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
