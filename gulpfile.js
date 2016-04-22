@@ -204,11 +204,12 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
             var exampleId = count + '_' + i;
             var controllerName = 'lnController_' + exampleId;
             var controllerAttrs = JSON.stringify(exampleInstance.params);
+            var controllerAttrsPretty = JSON.stringify(exampleInstance.params, null, 2);
 
             examples += exampleHtml
               .replace(/{EXAMPLE_ID}/g, exampleId)
               .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
-              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrs);
+              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrsPretty);
 
             controllers += controllerJs
               .replace(/{CONTROLLER_NAME}/g, controllerName)
@@ -228,7 +229,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
           .replace(/{COMPONENT_ID}/g, componentId)
           .replace(/{COMPONENT_NAME}/g, metadata.name)
           .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
-          .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
+          .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params, null, 2))
           .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
           .replace(/{EXAMPLES_TITLE_DISPLAY}/g, examplesTitleDisplay)
           .replace(EXAMPLE_REGEX, examples);
