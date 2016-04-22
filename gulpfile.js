@@ -221,6 +221,8 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
           }
         }
 
+        var examplesTitleDisplay = (examples == '') ? 'display: none;' : '';
+
         //instantiate component html and include into patterns tpl
         patterns += componentHtml
           .replace(/{COMPONENT_ID}/g, componentId)
@@ -228,6 +230,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
           .replace(/{COMPONENT_DESCRIPTION}/g, metadata.description)
           .replace(/{COMPONENT_PARAMS}/g, JSON.stringify(metadata.params))
           .replace(/{COMPONENT_EXAMPLE}/g, _.escape(exampleInstanceHtml))
+          .replace(/{EXAMPLES_TITLE_DISPLAY}/g, examplesTitleDisplay)
           .replace(EXAMPLE_REGEX, examples);
 
         if (collection != 'atoms' && !compCustom) {

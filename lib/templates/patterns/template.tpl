@@ -68,7 +68,7 @@
         <pre style="margin: 0; padding: .5em 10px; border-top: 1px solid #ddd; color: #333; background: #f7f7f7; overflow-x: scroll; font-family: monospace; white-space: pre; line-height: 15px;">
           <code style="display: block; font-family: Consolas,Courier New,monospace;" ng-non-bindable>{COMPONENT_EXAMPLE}</code>
         </pre>
-        <h4 style="padding: 0 10px; font-weight: 600;">Examples:</h4>
+        <h4 style="padding: 0 10px; font-weight: 600; {EXAMPLES_TITLE_DISPLAY}">Examples:</h4>
         {EXAMPLE}
         <p style="padding: 0 10px 0 10px; margin-bottom: 10px;">
           <a href="" ng-click="changeExample('{EXAMPLE_ID}')" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">{EXAMPLE_NAME}</a>
