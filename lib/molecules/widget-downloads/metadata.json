@@ -1,0 +1,14 @@
+{
+  "name": "ln-m-widget-downloads",
+  "description": "Molecule - Downloads Widget",
+  "params": {
+    "lnContent": {
+      "title": "STRING",
+      "items": [{
+        "title": "STRING",
+        "description": "STRING",
+        "file": "STRING"
+      }]
+    }
+  }
+}
