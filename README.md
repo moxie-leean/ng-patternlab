@@ -23,6 +23,8 @@ The config file must have the following structure:
 {
   "generatePatternsPage": true,
   "customComponentsLocation": "../../app/",
+  "patternsRoute": "#/patterns",
+  "examplesRoute": "#/examples",
   "examplesBackgroundColor": "#FFFFFF",
   "enabledComponents": [
     {

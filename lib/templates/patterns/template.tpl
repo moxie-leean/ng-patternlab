@@ -1,14 +1,13 @@
 /*** TEMPLATE FOR GENERATING - template.html - WHICH WILL CONTAIN THE PATTERNS PAGE DEFINITION ***/
 
 <div style="width: 100%;" ng-controller="lnPatternsController">
-  <div style="color: #222; background: #fff; top: 0; left: 0; overflow-y: scroll; overflow-x: hidden; position: fixed; white-space: nowrap; width: 20%; font: 1em/1.7 'Helvetica Neue',Helvetica,Arial,sans-serif; height: 70%;">
+  <div style="color: #222; background: #fff; top: 0; left: 0; overflow-y: scroll; overflow-x: hidden; position: fixed; white-space: nowrap; width: 20%; font: 1em/1.7 'Helvetica Neue',Helvetica,Arial,sans-serif; height: -moz-calc(70% - 30px); height: -webkit-calc(70% - 30px); height: -o-calc(70% - 30px); height: calc(70% - 30px);">
     <div>
-      <input type="color" ng-model="color" style="border: 2px solid transparent; border-radius: 0px; width: 100%; height: 30px; padding: 3px;">
       <h2 style="margin-top: 5px; margin-bottom: 10px; padding: 0 10px; font-size: 15pt;"><code style="font-weight: 400; font-family: Consolas,Courier New,monospace;">Atoms:</code></h2>
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {ATOM_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -18,7 +17,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {MOLECULE_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -28,7 +27,7 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {ORGANISM_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
@@ -38,12 +37,17 @@
       <ul style="margin-top: 0; padding: 0 10px; margin-left: 2em;">
         {TEMPLATE_LINK}
         <li style="list-style-type: none; margin: 0 0 0 -.9em;">
-          <a href="#/patterns#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
+          <a href="{PATTERNS_ROUTE}#{LINK_ID}" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">
             <code style="font-family: Consolas,Courier New,monospace;">{LINK_NAME}</code>
           </a>
         </li>
         {END_TEMPLATE_LINK}
       </ul>
+    </div>
+  </div>
+  <div style="color: #222; background: #fff; top: -moz-calc(70% - 30px); top: -webkit-calc(70% - 30px); top: -o-calc(70% - 30px); top: calc(70% - 30px); left: 0; overflow-y: hidden; overflow-x: hidden; position: fixed; white-space: nowrap; width: 20%; font: 1em/1.7 'Helvetica Neue',Helvetica,Arial,sans-serif; height: 30px;">
+    <div>
+      <input type="color" ng-model="color" style="border: 2px solid transparent; border-radius: 0px; width: 100%; height: 30px; padding: 2px;" title="Change background color of the example's area">
     </div>
   </div>
   <div style="color: #222; background: #fff; top: 0; right: 0; overflow-y: scroll; overflow-x: hidden; position: fixed; white-space: nowrap; width: 80%; font: 1em/1.7 'Helvetica Neue',Helvetica,Arial,sans-serif; height: 70%;">
@@ -57,27 +61,21 @@
         </h3>
         <p style="padding: 10px 10px 0 10px; margin-bottom: 10px;">{COMPONENT_DESCRIPTION}</p>
         <h4 style="padding: 0 10px; font-weight: 600;">Parameters:</h4>
-        <pre style="margin: 0; padding: .5em 10px; border-top: 1px solid #ddd; color: #333; background: #f7f7f7; overflow-x: scroll; font-family: monospace; white-space: pre; line-height: 15px;">
-          <code style="display: block; font-family: Consolas,Courier New,monospace;">{COMPONENT_PARAMS}</code>
-        </pre>
+        <pre style="margin: 0; padding: 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; color: #333; background: #f7f7f7; font-family: monospace; white-space: pre; line-height: 15px;"><code style="display: block; font-family: Consolas,Courier New,monospace;">{COMPONENT_PARAMS}</code></pre>
         <h4 style="padding: 0 10px; font-weight: 600;">Usage:</h4>
-        <pre style="margin: 0; padding: .5em 10px; border-top: 1px solid #ddd; color: #333; background: #f7f7f7; overflow-x: scroll; font-family: monospace; white-space: pre; line-height: 15px;">
-          <code style="display: block; font-family: Consolas,Courier New,monospace;" ng-non-bindable>{COMPONENT_EXAMPLE}</code>
-        </pre>
-        <h4 style="padding: 0 10px; font-weight: 600;">Examples:</h4>
+        <pre style="margin: 0; padding: 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; color: #333; background: #f7f7f7; overflow-x: auto; font-family: monospace; white-space: pre; line-height: 15px;"><code style="display: block; font-family: Consolas,Courier New,monospace;" ng-non-bindable>{COMPONENT_EXAMPLE}</code></pre>
+        <h4 style="padding: 0 10px; font-weight: 600; {EXAMPLES_TITLE_DISPLAY}">Examples:</h4>
         {EXAMPLE}
         <p style="padding: 0 10px 0 10px; margin-bottom: 10px;">
           <a href="" ng-click="changeExample('{EXAMPLE_ID}')" style="color: #6495ED; border-bottom: 1px solid #ddd; text-decoration: none;">{EXAMPLE_NAME}</a>
         </p>
-        <pre style="margin: 0; padding: .5em 10px; border-top: 1px solid #ddd; color: #333; background: #f7f7f7; overflow-x: scroll; font-family: monospace; white-space: pre; line-height: 15px;">
-          <code style="display: block; font-family: Consolas,Courier New,monospace;">{EXAMPLE_PARAMS}</code>
-        </pre>
+        <pre style="margin: 0; padding: 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; color: #333; background: #f7f7f7; font-family: monospace; white-space: pre; line-height: 15px;"><code style="display: block; font-family: Consolas,Courier New,monospace;">{EXAMPLE_PARAMS}</code></pre>
         {END_EXAMPLE}
       </div>
       {END_COMPONENT}
     </div>
   </div>
   <div style="bottom: 0; left: 0; overflow: hidden; position: fixed; width: 100%; height: 30%; overflow-x: hidden; border-top: 2px solid #ddd;">
-    <iframe ng-src="{{currentExampleUrl}}" width="100%" height="98%" scrolling="auto" style="border: 0;" ng-style="{'background-color': color}"></iframe>
+    <iframe ng-src="{{currentExampleUrl}}" width="100%" height="100%" scrolling="auto" style="border: 0;" ng-style="{'background-color': color}"></iframe>
   </div>
 </div>

@@ -1,0 +1,11 @@
+{
+  "name": "ln-m-widget-social",
+  "description": "Molecule - Social Networks Widget",
+  "params": {
+    "lnTitle": "STRING",
+    "lnItems": [{
+      "network": "STRING",
+      "link": "STRING"
+    }]
+  }
+}
