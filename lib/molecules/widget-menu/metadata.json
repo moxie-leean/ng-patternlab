@@ -2,12 +2,10 @@
   "name": "ln-m-widget-menu",
   "description": "Molecule - Menu Widget",
   "params": {
-    "lnContent": {
+    "lnTitle": "STRING",
+    "lnItems": [{
       "title": "STRING",
-      "items": [{
-        "title": "STRING",
-        "link": "STRING"
-      }]
-    }
+      "link": "STRING"
+    }]
   }
 }

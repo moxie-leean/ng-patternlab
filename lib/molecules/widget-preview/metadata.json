@@ -2,14 +2,12 @@
   "name": "ln-m-widget-preview",
   "description": "Molecule - Preview Widget",
   "params": {
-    "lnContent": {
+    "lnTitle": "STRING",
+    "lnItems": [{
       "title": "STRING",
-      "items": [{
-        "title": "STRING",
-        "description": "STRING",
-        "button_text": "STRING",
-        "link": "STRING"
-      }]
-    }
+      "description": "STRING",
+      "button_text": "STRING",
+      "link": "STRING"
+    }]
   }
 }

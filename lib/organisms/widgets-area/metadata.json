@@ -4,8 +4,7 @@
   "params": {
     "lnWidgets": [{
       "type": "STRING",
-      "class": "STRING",
-      "content": "OBJECT"
+      "params": "OBJECT"
     }]
   }
 }
