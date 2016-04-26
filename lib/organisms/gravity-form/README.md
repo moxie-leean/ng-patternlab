@@ -5,13 +5,13 @@ Built on the following tech:
 
 The component is part of the 'lnPatterns' module, you need to 
 ```
-npm install ln-patterns --save
+npm install ln-patternlab --save
 ```
 
 then require it in your site setup:
 
 ```
-require('ln-patterns');
+require('ln-patternlab');
 ```
 and finally, declare it as a dependency in your Angular app and configure it like so:
 
@@ -139,3 +139,8 @@ data: {
     status: 400
 }
 ```
+
+if you have specified 'ln-load-from-api="false"', then any form submission acknowledgement, or validation errors sent back from the server will need to be implemented by you. 
+If you are loading and rendering the form from the API, then the component will take care of submission acknowledgement and field-validation messages if form submission fails.
+
+The component currently supports a default confirmation type of 'message'.
