@@ -1,0 +1,11 @@
+{
+  "name": "ln-m-widget-menu",
+  "description": "Molecule - Menu Widget",
+  "params": {
+    "lnTitle": "STRING",
+    "lnItems": [{
+      "title": "STRING",
+      "link": "STRING"
+    }]
+  }
+}
