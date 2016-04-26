@@ -1,2 +1,2 @@
-<div ng-bind-html="vm.formHTML" ng-if="vm.loadFromAPI === true"></div>
+<div ng-if="vm.loadFromAPI === true" ng-bind-html="formHTML"></div>
 <ng-transclude ng-if="vm.loadFromAPI === false"></ng-transclude>
