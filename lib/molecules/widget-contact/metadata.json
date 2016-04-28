@@ -1,6 +1,6 @@
 {
   "name": "ln-m-widget-contact",
-  "description": "Molecule - Contact Details Widget (lean-contact-details)",
+  "description": "Molecule - Contact Details Widget (type: lean-contact-details)",
   "params": {
     "lnTitle": "STRING",
     "lnLogo": "STRING",

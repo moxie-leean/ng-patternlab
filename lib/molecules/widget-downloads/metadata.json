@@ -1,6 +1,6 @@
 {
   "name": "ln-m-widget-downloads",
-  "description": "Molecule - Downloads Widget (lean-downloads)",
+  "description": "Molecule - Downloads Widget (type: lean-downloads)",
   "params": {
     "lnTitle": "STRING",
     "lnLeandownloads": {

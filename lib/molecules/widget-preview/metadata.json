@@ -1,6 +1,6 @@
 {
   "name": "ln-m-widget-preview",
-  "description": "Molecule - Preview Widget (lean-preview)",
+  "description": "Molecule - Preview Widget (type: lean-preview)",
   "params": {
     "lnTitle": "STRING",
     "lnLeanpreview": {

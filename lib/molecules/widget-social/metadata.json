@@ -1,6 +1,6 @@
 {
   "name": "ln-m-widget-social",
-  "description": "Molecule - Social Networks Widget (lean-social-links)",
+  "description": "Molecule - Social Networks Widget (type: lean-social-links)",
   "params": {
     "lnTitle": "STRING",
     "lnItems": [{

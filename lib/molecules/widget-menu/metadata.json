@@ -1,6 +1,6 @@
 {
   "name": "ln-m-widget-menu",
-  "description": "Molecule - Menu Widget (lean-menu)",
+  "description": "Molecule - Menu Widget (type: lean-menu)",
   "params": {
     "lnTitle": "STRING",
     "lnItems": [{
