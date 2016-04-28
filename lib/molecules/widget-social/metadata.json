@@ -1,11 +1,12 @@
 {
   "name": "ln-m-widget-social",
-  "description": "Molecule - Social Networks Widget",
+  "description": "Molecule - Social Networks Widget (lean-social-links)",
   "params": {
     "lnTitle": "STRING",
     "lnItems": [{
       "network": "STRING",
-      "link": "STRING"
+      "link": "STRING",
+      "new_window": "BOOLEAN"
     }]
   }
 }

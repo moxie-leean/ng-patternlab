@@ -1,11 +1,11 @@
 <h4 ng-if="lnTitle">{{lnTitle}}</h4>
-<figure class="{{lnLogo.class}}" ng-if="lnLogo">
-  <img ng-src="{{lnLogo.src}}">
+<figure class="logo" ng-if="lnLogo">
+  <img ng-src="{{lnLogo}}">
 </figure>
-<div class="{{lnAddress.class}}" ng-if="lnAddress" ng-bind-html="lnAddress.text"></div>
-<div class="{{lnPhone.class}}" ng-if="lnPhone">
-  <a ng-href="tel:{{lnPhone.digits}}">{{lnPhone.number}}</a>
+<div class="address" ng-if="lnAddress" ng-bind-html="lnAddress"></div>
+<div class="phone" ng-if="lnPhone">
+  <a ng-href="tel:{{lnPhoneDigits}}">{{lnPhone}}</a>
 </div>
-<div class="{{lnEmail.class}}" ng-if="lnEmail">
-  <a ng-href="mailto:{{lnEmail.address}}">{{lnEmail.address}}</a>
+<div class="email" ng-if="lnEmail">
+  <a ng-href="mailto:{{lnEmail}}">{{lnEmail}}</a>
 </div>

@@ -1,23 +1,11 @@
 {
   "name": "ln-m-widget-contact",
-  "description": "Molecule - Contact Details Widget",
+  "description": "Molecule - Contact Details Widget (lean-contact-details)",
   "params": {
     "lnTitle": "STRING",
-    "lnLogo": {
-      "class": "STRING",
-      "src": "STRING"
-    },
-    "lnAddress": {
-      "class": "STRING",
-      "text": "STRING"
-    },
-    "lnPhone": {
-      "class": "STRING",
-      "number": "STRING"
-    },
-    "lnEmail": {
-      "class": "STRING",
-      "address": "STRING"
-    }
+    "lnLogo": "STRING",
+    "lnAddress": "STRING",
+    "lnPhone": "STRING",
+    "lnEmail": "STRING"
   }
 }

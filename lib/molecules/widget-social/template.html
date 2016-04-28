@@ -1,7 +1,7 @@
 <h4 ng-if="lnTitle">{{lnTitle}}</h4>
 <ul ng-if="lnItems.length">
   <li ng-repeat="item in lnItems">
-    <a ng-href="{{item.link}}" target="_blank" title="{{item.network}}">
+    <a ng-href="{{item.link}}" title="{{item.network}}" ng-attr-target="{{item.new_window ? '_blank' : '_self'}}">
       <span class="icon icon-{{item.network}}"></span>
     </a>
   </li>
