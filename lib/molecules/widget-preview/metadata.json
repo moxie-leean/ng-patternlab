@@ -1,13 +1,16 @@
 {
   "name": "ln-m-widget-preview",
-  "description": "Molecule - Preview Widget",
+  "description": "Molecule - Preview Widget (type: lean-preview)",
   "params": {
     "lnTitle": "STRING",
-    "lnItems": [{
-      "title": "STRING",
-      "description": "STRING",
-      "button_text": "STRING",
-      "link": "STRING"
-    }]
+    "lnLeanpreview": {
+      "items": [{
+        "title": "STRING",
+        "description": "STRING",
+        "button_text": "STRING",
+        "link": "STRING",
+        "new_window": "BOOLEAN"
+      }]
+    }
   }
 }
