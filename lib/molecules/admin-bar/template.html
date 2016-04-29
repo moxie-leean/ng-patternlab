@@ -1,0 +1,25 @@
+<div class="toolbar" role="navigation" aria-label="Toolbar" tabindex="0">
+  <ul class="toolbar-left">
+    <li class="menu">
+      <a class="menu-item" ng-href="{{lnDashboardUrl}}">{{lnSiteName}}</a>
+    </li>
+    <li class="menu">
+      <a class="menu-item" aria-haspopup="true"><span class="menu-icon-new"></span><span class="menu-label">New</span></a>
+      <div class="submenu-wrapper">
+        <ul class="submenu">
+          <li ng-repeat="type in lnNewItemTypes">
+            <a class="submenu-item" ng-href="{{type.url}}">{{type.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="menu">
+      <a class="menu-item" ng-href="{{lnEditPageUrl}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
+    </li>
+  </ul>
+  <ul class="toolbar-right">
+    <li class="menu">
+      <a class="menu-item" ng-href="{{lnLogoutUrl}}">Log Out</a>
+    </li>
+  </ul>
+</div>

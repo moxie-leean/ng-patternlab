@@ -1,0 +1,14 @@
+{
+  "name": "ln-m-admin-bar",
+  "description": "Molecule - WordPress Admin Bar",
+  "params": {
+    "lnSiteName": "STRING",
+    "lnDashboardUrl": "STRING",
+    "lnLogoutUrl": "STRING",
+    "lnEditPageUrl": "STRING",
+    "lnNewItemTypes": [{
+      "name": "STRING",
+      "url": "STRING"
+    }]
+  }
+}
