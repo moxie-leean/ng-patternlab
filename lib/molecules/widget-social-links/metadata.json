@@ -1,5 +1,5 @@
 {
-  "name": "ln-m-widget-social",
+  "name": "ln-m-widget-social-links",
   "description": "Molecule - Social Networks Widget (type: lean-social-links)",
   "params": {
     "lnTitle": "STRING",
