@@ -1,0 +1,11 @@
+{
+  "name": "ln-m-widget-recent",
+  "description": "Molecule - Recent Widget (type: lean-recent)",
+  "params": {
+    "lnTitle": "STRING",
+    "lnItems": [{
+      "title": "STRING",
+      "file": "STRING"
+    }]
+  }
+}

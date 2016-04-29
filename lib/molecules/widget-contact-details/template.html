@@ -1,0 +1,11 @@
+<h4 ng-if="lnTitle">{{lnTitle}}</h4>
+<figure class="logo" ng-if="lnLogo">
+  <img ng-src="{{lnLogo}}">
+</figure>
+<div class="address" ng-if="lnAddress" ng-bind-html="lnAddress"></div>
+<div class="phone" ng-if="lnPhone">
+  <a ng-href="tel:{{lnPhoneDigits}}">{{lnPhone}}</a>
+</div>
+<div class="email" ng-if="lnEmail">
+  <a ng-href="mailto:{{lnEmail}}">{{lnEmail}}</a>
+</div>

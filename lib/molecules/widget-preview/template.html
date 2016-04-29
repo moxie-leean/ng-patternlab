@@ -1,8 +1,8 @@
 <h4 ng-if="lnTitle">{{lnTitle}}</h4>
-<ul ng-if="lnItems.length">
-  <li ng-repeat="item in lnItems">
+<ul ng-if="lnLeanpreview.items.length">
+  <li ng-repeat="item in lnLeanpreview.items">
     <h5 ng-if="item.title">{{item.title}}</h5>
-    <div ng-if="item.description">{{item.description}}</div>
-    <a href="{{item.link}}" ng-if="item.link">{{item.button_text}}</a>
+    <div ng-if="item.description" ng-bind-html="item.description"></div>
+    <a href="{{item.link}}" ng-if="item.link" ng-attr-target="{{item.new_window ? '_blank' : '_self'}}">{{item.button_text}}</a>
   </li>
 </ul>
