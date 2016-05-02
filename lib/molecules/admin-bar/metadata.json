@@ -3,6 +3,7 @@
   "description": "Molecule - WordPress Admin Bar",
   "params": {
     "lnSiteName": "STRING",
+    "lnUserName": "STRING",
     "lnDashboardUrl": "STRING",
     "lnLogoutUrl": "STRING",
     "lnEditPageUrl": "STRING",
