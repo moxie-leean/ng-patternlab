@@ -1,6 +1,6 @@
 {
   "name": "ln-patternlab",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An AngularJS module for Lean Patterns.",
   "main": "index.js",
   "dependencies": {
