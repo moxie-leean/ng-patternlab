@@ -2,6 +2,7 @@
   "name": "ln-m-admin-bar",
   "description": "Molecule - WordPress Admin Bar",
   "params": {
+    "lnLoadFromApi": "BOOLEAN",
     "lnSiteName": "STRING",
     "lnUserName": "STRING",
     "lnDashboardUrl": "STRING",

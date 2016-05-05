@@ -1,25 +1,25 @@
-<div class="toolbar" role="navigation" aria-label="Toolbar" tabindex="0">
+<div class="toolbar" role="navigation" aria-label="Toolbar" tabindex="0" ng-show="vm.adminBarEnabled">
   <ul class="toolbar-left">
     <li class="menu">
-      <a class="menu-item" ng-href="{{lnDashboardUrl}}"><span class="menu-icon-home"></span><span class="menu-label">{{lnSiteName}}</span></a>
+      <a class="menu-item" ng-href="{{vm.lnDashboardUrl}}"><span class="menu-icon-home"></span><span class="menu-label">{{vm.lnSiteName}}</span></a>
     </li>
     <li class="menu">
       <a class="menu-item" aria-haspopup="true"><span class="menu-icon-new"></span><span class="menu-label">New</span></a>
       <div class="submenu-wrapper">
         <ul class="submenu">
-          <li ng-repeat="type in lnNewItemTypes">
+          <li ng-repeat="type in vm.lnNewItemTypes">
             <a class="submenu-item" ng-href="{{type.url}}">{{type.name}}</a>
           </li>
         </ul>
       </div>
     </li>
     <li class="menu">
-      <a class="menu-item" ng-href="{{lnEditPageUrl}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
+      <a class="menu-item" ng-href="{{vm.lnEditPageUrl}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
     </li>
   </ul>
   <ul class="toolbar-right">
     <li class="menu">
-      <a class="menu-item" ng-href="{{lnLogoutUrl}}">Log Out ({{lnUserName}})</a>
+      <a class="menu-item" ng-href="{{vm.lnLogoutUrl}}">Log Out ({{vm.lnUserName}})</a>
     </li>
   </ul>
 </div>
