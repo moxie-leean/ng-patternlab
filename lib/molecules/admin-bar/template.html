@@ -13,8 +13,8 @@
         </ul>
       </div>
     </li>
-    <li class="menu">
-      <a class="menu-item" ng-href="{{vm.lnEditPageUrl}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
+    <li class="menu" ng-if="vm.lnCurrentPostId > 0">
+      <a class="menu-item" ng-href="{{vm.lnEditPageUrl + vm.lnCurrentPostId}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
     </li>
   </ul>
   <ul class="toolbar-right">

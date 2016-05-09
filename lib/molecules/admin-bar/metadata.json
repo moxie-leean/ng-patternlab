@@ -8,6 +8,7 @@
     "lnDashboardUrl": "STRING",
     "lnLogoutUrl": "STRING",
     "lnEditPageUrl": "STRING",
+    "lnCurrentPostId": "INTEGER",
     "lnNewItemTypes": [{
       "name": "STRING",
       "url": "STRING"
