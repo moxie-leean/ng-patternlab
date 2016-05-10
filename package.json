@@ -11,7 +11,8 @@
     "gulp-util": "^3.0.7",
     "gulp-angular-templatecache": "^1.8.0",
     "lodash": "^4.8.2",
-    "shelljs": "^0.6.0"
+    "shelljs": "^0.6.0",
+    "angular-cookies": "1.5.5"
   },
   "devDependencies": {
     "eslint": "^1.10.3",
