@@ -1,0 +1,26 @@
+<div class="{{class}}" ln-m-admin-bar ln-load-from-api="false"
+  ln-site-name="{{lnSiteName}}" ln-user-name="{{lnUserName}}" 
+  ln-dashboard-url="{{lnDashboardUrl}}" ln-logout-url="{{lnLogoutUrl}}" 
+  ln-edit-page-url="{{lnEditPageUrl}}" ln-current-post-id="{{lnCurrentPostId}}" 
+  ln-new-item-types="lnNewItemTypes">
+</div>
+
+<!--
+OR... IF YOU WANT TO LOAD CONFIGURATION FROM WP-API, JUST USE IT LIKE THIS:
+
+<div class="{{class}}" ln-m-admin-bar ln-load-from-api="true" ln-current-post-id="{{lnCurrentPostId}}"></div>
+
+<script>
+  angular
+    .module('app', [
+      'lnPatterns'
+    ])
+    .run(appRun);
+
+  appRun.$inject = ['lnMAdminBarService'];
+
+  function appRun(lnMAdminBarService) {
+    lnMAdminBarService.setApiUrl(YOUR_WP_API_URL);
+  }
+</script>
+-->

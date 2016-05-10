@@ -1,0 +1,17 @@
+{
+  "name": "ln-m-admin-bar",
+  "description": "Molecule - WordPress Admin Bar",
+  "params": {
+    "lnLoadFromApi": "BOOLEAN",
+    "lnSiteName": "STRING",
+    "lnUserName": "STRING",
+    "lnDashboardUrl": "STRING",
+    "lnLogoutUrl": "STRING",
+    "lnEditPageUrl": "STRING",
+    "lnCurrentPostId": "INTEGER",
+    "lnNewItemTypes": [{
+      "name": "STRING",
+      "url": "STRING"
+    }]
+  }
+}
