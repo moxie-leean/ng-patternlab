@@ -3,7 +3,7 @@
     <li class="menu">
       <a class="menu-item" ng-href="{{vm.lnDashboardUrl}}"><span class="menu-icon-home"></span><span class="menu-label">{{vm.lnSiteName}}</span></a>
     </li>
-    <li class="menu">
+    <li class="menu" ng-if="vm.lnNewItemTypes.length > 0">
       <a class="menu-item" aria-haspopup="true"><span class="menu-icon-new"></span><span class="menu-label">New</span></a>
       <div class="submenu-wrapper">
         <ul class="submenu">
@@ -13,7 +13,7 @@
         </ul>
       </div>
     </li>
-    <li class="menu" ng-if="vm.lnCurrentPostId > 0">
+    <li class="menu" ng-if="vm.lnEditPageUrl != '' && vm.lnCurrentPostId > 0">
       <a class="menu-item" ng-href="{{vm.lnEditPageUrl + vm.lnCurrentPostId}}"><span class="menu-icon-edit"></span><span class="menu-label">Edit</span></a>
     </li>
   </ul>
