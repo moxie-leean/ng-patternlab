@@ -42,7 +42,7 @@
         "props": false
       }
     ],
-    "complexity": [ 2, 3 ],
+    "complexity": [ 2, 4 ],
     "max-depth": [2, 3],
     "max-len": [1, 160, 4],
     "max-nested-callbacks": [2, 3],
