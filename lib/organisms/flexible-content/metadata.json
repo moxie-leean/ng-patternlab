@@ -1,0 +1,10 @@
+{
+  "name": "ln-o-flexible-content",
+  "description": "Organism - Flexible Content. Designed to work with the ACF flexible content type. It renders an array of sections, choosing the directive to use for each based on the acf_fc_layout property value.",
+  "params": {
+    "lnRows": [{
+      "acf_fc_layout": "STRING",
+      "...": "ANY"
+    }]
+  }
+}
