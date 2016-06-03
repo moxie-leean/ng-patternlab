@@ -1,0 +1,9 @@
+{
+  "name": "ln-m-logo",
+  "description": "Molecule - Logo",
+  "params": {
+    "lnSrc": "STRING",
+    "lnSrcImage": "STRING",
+    "class": "STRING"
+  }
+}
