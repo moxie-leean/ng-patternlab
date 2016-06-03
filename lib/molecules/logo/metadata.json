@@ -2,8 +2,8 @@
   "name": "ln-m-logo",
   "description": "Molecule - Logo",
   "params": {
+    "lnHref": "STRING",
     "lnSrc": "STRING",
-    "lnSrcImage": "STRING",
-    "class": "STRING"
+    "lnClass": "STRING"
   }
 }
