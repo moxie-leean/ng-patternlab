@@ -3,7 +3,7 @@
   "description": "Molecule - Horizontal Header Menu with items and subitems",
   "params": {
     "lnParentClass": "STRING",
-    "lnChildClass": "STRING",
+    "lnItemClass": "STRING",
     "lnSelParentClass": "STRING",
     "lnSelItemClass": "STRING",
     "lnParentIconClass": "STRING",
