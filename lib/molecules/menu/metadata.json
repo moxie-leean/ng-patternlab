@@ -2,6 +2,8 @@
   "name": "ln-m-menu",
   "description": "Molecule - Horizontal Header Menu with items and subitems",
   "params": {
+    "lnParentClass": "STRING",
+    "lnItemClass": "STRING",
     "lnSelParentClass": "STRING",
     "lnSelItemClass": "STRING",
     "lnParentIconClass": "STRING",
