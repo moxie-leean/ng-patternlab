@@ -1,6 +1,6 @@
 {
   "name": "ln-patternlab",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An AngularJS module for Lean Patterns.",
   "author": "Moxie <developer@getmoxied.net> (https://getmoxied.net)",
   "main": "index.js",
