@@ -1,0 +1,18 @@
+{
+  "name": "ln-m-select-ul",
+  "description": "Molecule - Select control which converts to a ul for styling on desktop.",
+  "params": {
+    "ngModel": "VAR",
+    "lnOptions": [{
+      "value": "STRING",
+      "label": "STRING"
+    }],
+    "lnValueField": "STRING",
+    "lnLabelField": "STRING",
+    "lnPlaceholder": "STRING",
+    "lnNone": "STRING",
+    "lnMobileNone": "STRING",
+    "lnRequired": "BOOLEAN",
+    "lnItemDirective": "STRING"
+  }
+}
