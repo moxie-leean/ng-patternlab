@@ -39,7 +39,7 @@ rules:
     -
       properties:
         - content
-  quote:
+  quotes:
      - 2
      -
        style: single
