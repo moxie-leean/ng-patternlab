@@ -2,7 +2,7 @@
   "name": "ln-m-select-ul",
   "description": "Molecule - Select control which converts to a ul for styling on desktop.",
   "params": {
-    "ngModel": "VAR",
+    "lnModel": "VAR",
     "lnOptions": [{
       "value": "STRING",
       "label": "STRING"

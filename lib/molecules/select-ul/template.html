@@ -1,10 +1,9 @@
 <div class="select-to-ul-container" ng-class="{'hiding': hidingInProgress, 'displaying-options': displayOptions}">
   <div class="desktop" ng-show="!vm.hasTouchSupport" ng-click="toggleOptions()">
-    <span ln-m-select-ul-item
-          ln-label="{{getSelected(labelField)}}"
+    <span id="select-to-ul_{{lnPlaceholder}}"
           class="fake-select"
-          id="select-to-ul_{{lnPlaceholder}}"
-          click-outside="hideOptions()"></span>
+          ng-bind-html="getSelected(labelField)">
+    </span>
     <ul ng-show="displayOptions">
       <li ln-m-select-ul-item
           ln-label="{{none}}"
@@ -13,13 +12,14 @@
       </li>
       <li ng-repeat="option in lnOptions"
           ng-click="setSelected($index)"
-          ng-bind-html="getOptionHtml( option )">
+          ln-m-select-ul-wrapper
+          ln-option="option">
       </li>
     </ul>
   </div>
 
-  <div class="mobile" ng-show="!vm.hasTouchSupport">
-    <select ng-model="ngModel"
+  <div class="mobile" ng-show="vm.hasTouchSupport">
+    <select ng-model="lnModel"
             ng-required="{{required}}"
             placeholder="{{lnPlaceholder}}">
       <option value=""
