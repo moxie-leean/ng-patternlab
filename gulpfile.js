@@ -209,7 +209,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
             examples += exampleHtml
               .replace(/{EXAMPLE_ID}/g, exampleId)
               .replace(/{EXAMPLE_NAME}/g, exampleInstance.name)
-              .replace(/{EXAMPLE_PARAMS}/g, controllerAttrsPretty);
+              .replace(/{EXAMPLE_PARAMS}/g, _.escape(controllerAttrsPretty));
 
             controllers += controllerJs
               .replace(/{CONTROLLER_NAME}/g, controllerName)
@@ -258,7 +258,7 @@ gulp.task('lnPatternsComponents', ['lnPatternsLoadConfig'], function (cb) {
 
   var includeTemplate = function(file) {
     include(file, 'templates', customSearch);
-  }; 
+  };
 
   glob.sync('./lib/atoms/**/metadata.json').forEach(includeAtom);
   glob.sync('./lib/molecules/**/*.js').forEach(includeMolecule);
