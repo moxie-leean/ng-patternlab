@@ -1,10 +1,10 @@
 {
-  "name": "mx-o-comments",
+  "name": "ln-o-disqus-comments",
   "description": "Organisms - Disqus Comments",
   "params": {
-    "mxTitle": "STRING",
-    "mxDisqusShortname": "STRING",
-    "mxDisqusId": "STRING",
-    "mxDisqusTitle": "STRING"
+    "lnTitle": "STRING",
+    "lnDisqusShortname": "STRING",
+    "lnDisqusId": "STRING",
+    "lnDisqusTitle": "STRING"
   }
 }
