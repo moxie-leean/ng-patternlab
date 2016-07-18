@@ -1,0 +1,10 @@
+{
+  "name": "ln-o-disqus-comments",
+  "description": "Organisms - Disqus Comments",
+  "params": {
+    "lnTitle": "STRING",
+    "lnDisqusShortname": "STRING",
+    "lnDisqusId": "STRING",
+    "lnDisqusTitle": "STRING"
+  }
+}
