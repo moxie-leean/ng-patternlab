@@ -1,0 +1,37 @@
+<div class="select-to-ul-container" ng-class="{'hiding': hidingInProgress, 'displaying-options': displayOptions}">
+  <div class="desktop" ng-show="!vm.hasTouchSupport" ng-click="toggleOptions()">
+    <span ln-m-select-ul-item
+          ln-label="{{getSelected(labelField)}}"
+          class="fake-select"
+          id="select-to-ul_{{lnPlaceholder}}"
+          click-outside="hideOptions()"></span>
+    <ul ng-show="displayOptions">
+      <li ln-m-select-ul-item
+          ln-label="{{none}}"
+          ng-if="none"
+          ng-click="setSelected(-1)">
+      </li>
+      <li ng-repeat="option in lnOptions"
+          ng-click="setSelected($index)"
+          ng-bind-html="getOptionHtml( option )">
+      </li>
+    </ul>
+  </div>
+
+  <div class="mobile" ng-show="!vm.hasTouchSupport">
+    <select ng-model="ngModel"
+            ng-required="{{required}}"
+            placeholder="{{lnPlaceholder}}">
+      <option value=""
+              ng-bind-html="mobileNone"
+              ng-if="mobileNone">
+      </option>
+      <option ng-if="option[labelField]"
+              ng-repeat="option in lnOptions"
+              value="{{option[valueField]}}"
+              ng-bind-html="option[labelField]"
+              ng-selected="option[valueField] === getSelected(valueField)">
+      </option>
+    </select>
+  </div>
+</div>
