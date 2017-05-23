@@ -6,8 +6,16 @@
     </a>
     <ul ng-if="item.items.length">
       <li ng-repeat="subItem in item.items" ng-class="subItem.class">
-        <a ng-href="{{subItem.link}}" ng-class="lnItemClass" ng-attr-target="{{subItem.new_window ? '_blank' : ''}}">{{subItem.title}}</a>
+        <a ng-if="subItem.link.indexOf('#') === -1"
+           ng-href="{{subItem.link}}"
+           ng-class="lnItemClass"
+           ng-attr-target="{{subItem.new_window ? '_blank' : ''}}">{{subItem.title}}</a>
+        <a ng-if="subItem.link.indexOf('#') !== -1"
+           ng-click="gotoHashURL(subItem)"
+           ng-class="lnItemClass"
+           ng-attr-target="{{subItem.new_window ? '_blank' : ''}}">{{subItem.title}}</a>
       </li>
     </ul>
   </li>
 </ul>
+
